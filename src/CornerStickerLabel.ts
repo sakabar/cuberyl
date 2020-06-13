@@ -1,6 +1,7 @@
 export const CornerStickerLabel = {
     // 3で割った商が同じもの同士でグループ
     // CornerPieceLabel順、時計回り順
+    // 2文字目・3文字目はアルファベット順
     UBL: 0,
     LBU: 1,
     BLU: 2,

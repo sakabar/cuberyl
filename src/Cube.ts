@@ -5,7 +5,7 @@ import {Cube444} from './Cube444';
 export class Cube implements CubeInterface {
     cube: CubeInterface;
 
-    constructor(private order: number){
+    constructor(order: number){
         if (order == 3) {
             this.cube = new Cube333();
         } else if (order == 4) {

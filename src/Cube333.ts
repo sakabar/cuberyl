@@ -1,12 +1,8 @@
 const _ = require('lodash');
 import {CubeInterface} from './CubeInterface';
 import {Notation} from './Notation';
+import {Move} from './Move';
 import {State333} from './State333';
-
-
-interface StringToNumber {
-    [key: string]: number;
-}
 
 export class Cube333 implements CubeInterface {
     #u_state = new State333(
@@ -60,26 +56,51 @@ export class Cube333 implements CubeInterface {
             return
         }
 
+        // ここから下は1回転の場合
+        const oneMove = new Move(sequence);
+
         // TODO: 他のNotationにも対応する
         // TODO: Caseで網羅的に書く
-        if (sequence === Notation.R) {
-            this.state = this.state.applyMove(this.#r_state);
-        } else if (sequence === Notation.R2) {
-            this.state = this.state.applyMove(this.#r_state).applyMove(this.#r_state);
-        } else if (sequence === Notation.R_) {
+        switch (oneMove.getNotation()) {
+            case Notation.R:
+                this.state = this.state.applyMove(this.#r_state);
+                break;
+
+            case Notation.R2:
+                this.state = this.state.applyMove(this.#r_state).applyMove(this.#r_state);
+                break;
+
+            case Notation.R_:
             this.state = this.state.applyMove(this.#r_state).applyMove(this.#r_state).applyMove(this.#r_state);
-        } else if (sequence === Notation.U) {
-            this.state = this.state.applyMove(this.#u_state);
-        } else if (sequence === Notation.U2) {
-            this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state);
-        } else if (sequence === Notation.U_) {
-            this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state).applyMove(this.#u_state);
-        } else if (sequence === Notation.D) {
-            this.state = this.state.applyMove(this.#d_state);
-        } else if (sequence === Notation.D2) {
-            this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state);
-        } else if (sequence === Notation.D_) {
-            this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state).applyMove(this.#d_state);
+                break;
+
+            case Notation.U:
+                this.state = this.state.applyMove(this.#u_state);
+                break;
+
+            case Notation.U2:
+                this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state);
+                break;
+
+            case Notation.U_:
+                this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state).applyMove(this.#u_state);
+                break;
+
+            case Notation.D:
+                this.state = this.state.applyMove(this.#d_state);
+                break;
+
+            case Notation.D2:
+                this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state);
+                break;
+
+            case Notation.D_:
+                this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state).applyMove(this.#d_state);
+                break;
+
+            // default:
+            //     const _exhaustiveCheck: never = sequence;
+            //     // throw new Error(`Not implemented for notation ${sequence}`);
         }
 
     }

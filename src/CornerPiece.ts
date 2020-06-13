@@ -1,3 +1,4 @@
+const _ = require('lodash');
 import {Part} from './Part';
 import {PartLabel} from './PartLabel';
 import {PieceInterface} from './PieceInterface';
@@ -9,7 +10,11 @@ export class CornerPiece implements PieceInterface {
     constructor(private pieceLabel : CornerPieceLabel) {
     };
 
-    get pieceInd(): number {
-        return this.pieceLabel
+    public getPart(): Part {
+        return _.cloneDeep(this.part);
+    }
+
+    public getPieceInd(): number {
+        return this.pieceLabel;
     };
 }

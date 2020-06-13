@@ -1,7 +1,7 @@
 const _ = require('lodash');
 import {StateInterface} from './StateInterface';
 
-export class State333 {
+export class State333 implements StateInterface {
     constructor(private cp: Array<number>,
                 private co: Array<number>,
                 private ep: Array<number>,

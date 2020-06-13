@@ -13,7 +13,7 @@ export class Algorithm {
         });
     };
 
-    public is_valid_three_style_corner(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
+    public isValidThreeStyleCorner(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
         const algCube = new Cube333();
         this.moves.map(move => {
             algCube.move(move.getNotation());
