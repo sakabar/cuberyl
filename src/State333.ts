@@ -8,7 +8,81 @@ export class State333 {
                 private eo: Array<number>,
                 private center: Array<number>) {
 
-        // TODO: ひねり量の和が0になっていることを確認する
+        if (!this.isValidCp(cp)) {
+            throw new Error(`CP of this state is invalid: ${cp}`);
+        }
+
+        if (!this.isValidCo(co)) {
+            throw new Error(`CO of this state is invalid: ${co}`);
+        }
+
+        if (!this.isValidEp(ep)) {
+            throw new Error(`EP of this state is invalid: ${ep}`);
+        }
+
+        if (!this.isValidEo(eo)) {
+            throw new Error(`EO of this state is invalid: ${eo}`);
+        }
+
+        if (!this.isValidCenter(center)) {
+            throw new Error(`Center of this state is invalid: ${center}`);
+        }
+
+        if (!this.isSameParity(cp, ep)) {
+            throw new Error(`This this state makes 2-cycle, CP: ${cp} EP: ${ep}`);
+        }
+
+    }
+
+    private isValidCp(cp: Array<number>): boolean {
+        return _.isEqual(cp.slice().sort((a, b) => a - b), [ ...Array(cp.length).keys(), ]);
+    }
+
+    private isValidCo(co: Array<number>): boolean {
+        const valIsValid = co.filter(n => !(0 <= n && n < 3)).length === 0;
+        const twistIsValid = _.sum(co) % 3 === 0;
+        return valIsValid && twistIsValid;
+    }
+
+    private isValidEp(ep: Array<number>): boolean {
+        return _.isEqual(ep.slice().sort((a, b) => a - b), [ ...Array(ep.length).keys(), ]);
+    }
+
+    private isValidEo(eo: Array<number>): boolean {
+        const valIsValid = eo.filter(n => !(0 <= n && n < 2)).length === 0;
+        const twistIsValid = _.sum(eo) % 2 === 0;
+        return valIsValid && twistIsValid;
+    }
+
+    private isValidCenter(center: Array<number>): boolean {
+        return _.isEqual(center.slice().sort((a, b) => a - b), [ ...Array(center.length).keys(), ]);
+    }
+
+    // CPやEPを渡して、奇置換なら1、偶置換なら0を返す
+    // 渡す配列は0~(len-1)がシャッフルされたものであるという前提
+    private calcParity(cp: Array<number>) : number {
+        const arr = [...cp,];
+        let permCnt = 0;
+
+        let ind = 0;
+        while(ind < arr.length){
+            if (arr[ind] === ind) {
+                ind += 1;
+                continue;
+            }
+
+            // 今indにある値を本来入るべき場所に入れて、入れ換える
+            const current = arr[ind];
+            arr[ind] = arr[current];
+            arr[current] = current;
+            permCnt += 1;
+        }
+
+        return permCnt % 2;
+    }
+
+    private isSameParity(cp: Array<number>, ep: Array<number>): boolean {
+        return this.calcParity(cp) === this.calcParity(ep);
     }
 
     public getCp() : Array<number> {

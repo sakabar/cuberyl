@@ -11,7 +11,7 @@ describe('Move.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
-    it('constructor ERROR', () => {
+    it('回転記号が正しくない場合はエラー', () => {
         chai.assert.throws(() => new Move('DUMMY'), Error);
     });
 });
