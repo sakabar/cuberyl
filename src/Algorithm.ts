@@ -1,7 +1,7 @@
 import {Move} from './Move';
 import {Cube333} from './Cube333';
 import {CornerSticker} from './CornerSticker';
-import {State} from './State';
+import {State333} from './State333';
 
 export class Algorithm {
     private moves : Array<Move> = [];
@@ -29,7 +29,7 @@ export class Algorithm {
         const newSticker2CO = (sticker2CO - sticker1CO + 3) % 3;
 
         // initialStateからCP, COしたStateを生成して、this.stateと同一かどうか判定する
-        const initialState = State.getInitialState();
+        const initialState = State333.getInitialState();
         const cp = initialState.getCp();
         const co = initialState.getCo();
 
@@ -42,7 +42,7 @@ export class Algorithm {
         co[sticker1.getPieceInd()] = newSticker1CO;
         co[sticker2.getPieceInd()] = newSticker2CO;
 
-        const cycledState = new State(cp, co, initialState.getEp(), initialState.getEo(), initialState.getCenter());
+        const cycledState = new State333(cp, co, initialState.getEp(), initialState.getEo(), initialState.getCenter());
 
         return algCube.getState().eq(cycledState);
     };

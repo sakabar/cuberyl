@@ -1,7 +1,7 @@
 const _ = require('lodash');
 import {CubeInterface} from './CubeInterface';
 import {Notation} from './Notation';
-import {State} from './State';
+import {State333} from './State333';
 
 
 interface StringToNumber {
@@ -9,7 +9,7 @@ interface StringToNumber {
 }
 
 export class Cube333 implements CubeInterface {
-    #u_state = new State(
+    #u_state = new State333(
         [ 3, 0, 1, 2, 4, 5, 6, 7, ],
         [ 0, 0, 0, 0, 0, 0, 0, 0, ],
         [ 0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11, ],
@@ -17,7 +17,7 @@ export class Cube333 implements CubeInterface {
         [ 0, 1, 2, 3, 4, 5, ]
     );
 
-    #r_state = new State(
+    #r_state = new State333(
         [ 0, 2, 6, 3, 4, 1, 5, 7],
         [ 0, 1, 2, 0, 0, 2, 1, 0],
         [ 0, 5, 9, 3, 4, 2, 6, 7, 8, 1, 10, 11],
@@ -25,7 +25,7 @@ export class Cube333 implements CubeInterface {
         [ 0, 1, 2, 3, 4, 5, ]
     );
 
-    #d_state = new State(
+    #d_state = new State333(
         [ 0, 1, 2, 3, 5, 6, 7, 4, ],
         [ 0, 0, 0, 0, 0, 0, 0, 0, ],
         [ 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8, ],
@@ -33,16 +33,16 @@ export class Cube333 implements CubeInterface {
         [ 0, 1, 2, 3, 4, 5, ]
     );
 
-    private state : State;
+    private state : State333;
 
     constructor(sequence?: string) {
-        this.state = State.getInitialState();
+        this.state = State333.getInitialState();
         if (sequence) {
             this.move(sequence);
         }
     }
 
-    public getState(): State {
+    public getState(): State333 {
         return _.cloneDeep(this.state);
     }
 
