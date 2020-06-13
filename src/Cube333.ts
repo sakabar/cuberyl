@@ -21,6 +21,14 @@ export class Cube333 implements CubeInterface {
         [ 0, 1, 2, 3, 4, 5, ]
     );
 
+    #l_state = new State333(
+        [ 4, 1, 2, 0, 7, 5, 6, 3],
+        [ 2, 0, 0, 1, 1, 0, 0, 2],
+        [ 11, 1, 2, 7, 4, 5, 6, 0, 8, 9, 10, 3],
+        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 1, 2, 3, 4, 5, ]
+    );
+
     #d_state = new State333(
         [ 0, 1, 2, 3, 5, 6, 7, 4, ],
         [ 0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -61,7 +69,8 @@ export class Cube333 implements CubeInterface {
 
         // TODO: 他のNotationにも対応する
         // TODO: Caseで網羅的に書く
-        switch (oneMove.getNotation()) {
+        const notation = oneMove.getNotation();
+        switch (notation) {
             case Notation.R:
                 this.state = this.state.applyMove(this.#r_state);
                 break;
@@ -86,6 +95,18 @@ export class Cube333 implements CubeInterface {
                 this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state).applyMove(this.#u_state);
                 break;
 
+            case Notation.L:
+                this.state = this.state.applyMove(this.#l_state);
+                break;
+
+            case Notation.L2:
+                this.state = this.state.applyMove(this.#l_state).applyMove(this.#l_state);
+                break;
+
+            case Notation.L_:
+                this.state = this.state.applyMove(this.#l_state).applyMove(this.#l_state).applyMove(this.#l_state);
+                break;
+
             case Notation.D:
                 this.state = this.state.applyMove(this.#d_state);
                 break;
@@ -98,9 +119,9 @@ export class Cube333 implements CubeInterface {
                 this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state).applyMove(this.#d_state);
                 break;
 
-            // default:
-            //     const _exhaustiveCheck: never = sequence;
-            //     // throw new Error(`Not implemented for notation ${sequence}`);
+            default:
+                // const _exhaustiveCheck: never = notation;
+                throw new Error(`Not implemented for notation ${notation}`);
         }
 
     }
