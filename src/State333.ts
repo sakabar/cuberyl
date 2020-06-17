@@ -204,7 +204,7 @@ export class State333 implements StateInterface {
 
             default:
                 // @ts-ignore TS6133: '_exhaustiveCheck' is declared but its value is never read.
-                const _exhaustiveCheck: never = centerUInd;
+                const _exhaustiveCheck: never = centerFInd;
         }
 
         const cp = rotatedState.getCp();
