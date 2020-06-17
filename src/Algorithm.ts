@@ -1,6 +1,7 @@
 import {Move} from './Move';
 import {Cube333} from './Cube333';
 import {CornerSticker} from './CornerSticker';
+import {EdgeSticker} from './EdgeSticker';
 import {State333} from './State333';
 
 export class Algorithm {
@@ -43,6 +44,40 @@ export class Algorithm {
         co[sticker2.getPieceInd()] = newSticker2CO;
 
         const cycledState = new State333(cp, co, initialState.getEp(), initialState.getEo(), initialState.getCenter());
+
+        return algCube.getState().eq(cycledState);
+    };
+
+    public isValidThreeStyleEdge(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker): boolean {
+        const algCube = new Cube333();
+        this.moves.map(move => {
+            algCube.move(move.getNotation());
+        });
+
+        const bufferEO = buffer.getOrientation();
+        const sticker1EO = sticker1.getOrientation();
+        const sticker2EO = sticker2.getOrientation();
+
+        // (負の数) % 3 にならないようにしている
+        const newBufferEO = (bufferEO - sticker2EO + 2) % 2;
+        const newSticker1EO = (sticker1EO - bufferEO + 2) % 2;
+        const newSticker2EO = (sticker2EO - sticker1EO + 2) % 2;
+
+        // initialStateからEP, EOしたStateを生成して、this.stateと同一かどうか判定する
+        const initialState = State333.getInitialState();
+        const ep = initialState.getEp();
+        const eo = initialState.getEo();
+
+        const orig_buffer_ep = ep[buffer.getPieceInd()];
+        ep[buffer.getPieceInd()] = ep[sticker2.getPieceInd()];
+        ep[sticker2.getPieceInd()] = ep[sticker1.getPieceInd()];
+        ep[sticker1.getPieceInd()] = orig_buffer_ep;
+
+        eo[buffer.getPieceInd()] = newBufferEO;
+        eo[sticker1.getPieceInd()] = newSticker1EO;
+        eo[sticker2.getPieceInd()] = newSticker2EO;
+
+        const cycledState = new State333(initialState.getCp(), initialState.getCo(), ep, eo, initialState.getCenter());
 
         return algCube.getState().eq(cycledState);
     };

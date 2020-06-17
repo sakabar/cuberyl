@@ -5,38 +5,6 @@ import {Move} from './Move';
 import {State333} from './State333';
 
 export class Cube333 implements CubeInterface {
-    #u_state = new State333(
-        [ 3, 0, 1, 2, 4, 5, 6, 7, ],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [ 0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11, ],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [ 0, 1, 2, 3, 4, 5, ]
-    );
-
-    #r_state = new State333(
-        [ 0, 2, 6, 3, 4, 1, 5, 7],
-        [ 0, 1, 2, 0, 0, 2, 1, 0],
-        [ 0, 5, 9, 3, 4, 2, 6, 7, 8, 1, 10, 11],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [ 0, 1, 2, 3, 4, 5, ]
-    );
-
-    #l_state = new State333(
-        [ 4, 1, 2, 0, 7, 5, 6, 3],
-        [ 2, 0, 0, 1, 1, 0, 0, 2],
-        [ 11, 1, 2, 7, 4, 5, 6, 0, 8, 9, 10, 3],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [ 0, 1, 2, 3, 4, 5, ]
-    );
-
-    #d_state = new State333(
-        [ 0, 1, 2, 3, 5, 6, 7, 4, ],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [ 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8, ],
-        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
-        [ 0, 1, 2, 3, 4, 5, ]
-    );
-
     private state : State333;
 
     constructor(sequence?: string) {
@@ -72,54 +40,161 @@ export class Cube333 implements CubeInterface {
         const notation = oneMove.getNotation();
         switch (notation) {
             case Notation.R:
-                this.state = this.state.applyMove(this.#r_state);
+                this.state = this.state.applyMove(State333.getRMoveState());
                 break;
 
             case Notation.R2:
-                this.state = this.state.applyMove(this.#r_state).applyMove(this.#r_state);
+                this.state = this.state
+                        .applyMove(State333.getRMoveState())
+                        .applyMove(State333.getRMoveState());
                 break;
 
             case Notation.R_:
-            this.state = this.state.applyMove(this.#r_state).applyMove(this.#r_state).applyMove(this.#r_state);
+                this.state = this.state
+                        .applyMove(State333.getRMoveState())
+                        .applyMove(State333.getRMoveState())
+                        .applyMove(State333.getRMoveState());
                 break;
 
             case Notation.U:
-                this.state = this.state.applyMove(this.#u_state);
+                this.state = this.state.applyMove(State333.getUMoveState());
                 break;
 
             case Notation.U2:
-                this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state);
+                this.state = this.state
+                        .applyMove(State333.getUMoveState())
+                        .applyMove(State333.getUMoveState());
                 break;
 
             case Notation.U_:
-                this.state = this.state.applyMove(this.#u_state).applyMove(this.#u_state).applyMove(this.#u_state);
+                this.state = this.state
+                        .applyMove(State333.getUMoveState())
+                        .applyMove(State333.getUMoveState())
+                        .applyMove(State333.getUMoveState());
                 break;
 
             case Notation.L:
-                this.state = this.state.applyMove(this.#l_state);
+                this.state = this.state.applyMove(State333.getLMoveState());
                 break;
 
             case Notation.L2:
-                this.state = this.state.applyMove(this.#l_state).applyMove(this.#l_state);
+                this.state = this.state
+                        .applyMove(State333.getLMoveState())
+                        .applyMove(State333.getLMoveState());
                 break;
 
             case Notation.L_:
-                this.state = this.state.applyMove(this.#l_state).applyMove(this.#l_state).applyMove(this.#l_state);
+                this.state = this.state
+                        .applyMove(State333.getLMoveState())
+                        .applyMove(State333.getLMoveState())
+                        .applyMove(State333.getLMoveState());
                 break;
 
             case Notation.D:
-                this.state = this.state.applyMove(this.#d_state);
+                this.state = this.state.applyMove(State333.getDMoveState());
                 break;
 
             case Notation.D2:
-                this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state);
+                this.state = this.state
+                        .applyMove(State333.getDMoveState())
+                        .applyMove(State333.getDMoveState());
                 break;
 
             case Notation.D_:
-                this.state = this.state.applyMove(this.#d_state).applyMove(this.#d_state).applyMove(this.#d_state);
+                this.state = this.state
+                        .applyMove(State333.getDMoveState())
+                        .applyMove(State333.getDMoveState())
+                        .applyMove(State333.getDMoveState());
+                break;
+
+            case Notation.F:
+                this.state = this.state.applyMove(State333.getFMoveState());
+                break;
+
+            case Notation.F2:
+                this.state = this.state
+                        .applyMove(State333.getFMoveState())
+                        .applyMove(State333.getFMoveState());
+                break;
+
+            case Notation.F_:
+                this.state = this.state
+                        .applyMove(State333.getFMoveState())
+                        .applyMove(State333.getFMoveState())
+                        .applyMove(State333.getFMoveState());
+                break;
+
+            case Notation.B:
+                this.state = this.state.applyMove(State333.getBMoveState());
+                break;
+
+            case Notation.B2:
+                this.state = this.state
+                        .applyMove(State333.getBMoveState())
+                        .applyMove(State333.getBMoveState());
+                break;
+
+            case Notation.B_:
+                this.state = this.state
+                        .applyMove(State333.getBMoveState())
+                        .applyMove(State333.getBMoveState())
+                        .applyMove(State333.getBMoveState());
+                break;
+
+            case Notation.E:
+                this.state = this.state.applyMove(State333.getEMoveState());
+                break;
+
+            case Notation.E2:
+                this.state = this.state
+                        .applyMove(State333.getEMoveState())
+                        .applyMove(State333.getEMoveState());
+                break;
+
+            case Notation.E_:
+                this.state = this.state
+                        .applyMove(State333.getEMoveState())
+                        .applyMove(State333.getEMoveState())
+                        .applyMove(State333.getEMoveState());
+                break;
+
+            case Notation.M:
+                this.state = this.state
+                        .applyMove(State333.getMMoveState());
+                break;
+
+            case Notation.M2:
+                this.state = this.state
+                        .applyMove(State333.getMMoveState())
+                        .applyMove(State333.getMMoveState());
+                break;
+
+            case Notation.M_:
+                this.state = this.state
+                        .applyMove(State333.getMMoveState())
+                        .applyMove(State333.getMMoveState())
+                        .applyMove(State333.getMMoveState());
+                break;
+
+            case Notation.S:
+                this.state = this.state.applyMove(State333.getSMoveState());
+                break;
+
+            case Notation.S2:
+                this.state = this.state
+                        .applyMove(State333.getSMoveState())
+                        .applyMove(State333.getSMoveState());
+                break;
+
+            case Notation.S_:
+                this.state = this.state
+                        .applyMove(State333.getSMoveState())
+                        .applyMove(State333.getSMoveState())
+                        .applyMove(State333.getSMoveState());
                 break;
 
             default:
+                // @ts-ignore TS6133: '_exhaustiveCheck' is declared but its value is never read.
                 // const _exhaustiveCheck: never = notation;
                 throw new Error(`Not implemented for notation ${notation}`);
         }
