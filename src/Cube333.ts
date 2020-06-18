@@ -1,10 +1,9 @@
 const _ = require('lodash');
-import {CubeInterface} from './CubeInterface';
 import {Notation} from './Notation';
 import {Move} from './Move';
 import {State333} from './State333';
 
-export class Cube333 implements CubeInterface {
+export class Cube333 {
     private state : State333;
 
     constructor(sequence?: string) {
@@ -416,6 +415,10 @@ export class Cube333 implements CubeInterface {
 
     public eq(c: Cube333): boolean {
         return this.state.eq(c.state);
+    }
+
+    public isSolved(): boolean {
+        return this.state.eq(State333.getInitialState());
     }
 }
 

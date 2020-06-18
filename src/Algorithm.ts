@@ -1,7 +1,9 @@
 import {Move} from './Move';
 import {Cube333} from './Cube333';
 import {CornerSticker} from './CornerSticker';
+import {readCornerStickerLabel} from './CornerStickerLabel';
 import {EdgeSticker} from './EdgeSticker';
+import {readEdgeStickerLabel} from './EdgeStickerLabel';
 import {State333} from './State333';
 
 export class Algorithm {
@@ -14,8 +16,24 @@ export class Algorithm {
         });
     };
 
-    public isValidThreeStyleCorner(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
-        const algCube = new Cube333();
+    public isValidThreeStyleCorner(order: number, bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new CornerSticker(readCornerStickerLabel(bufferStr));
+        const sticker1 = new CornerSticker(readCornerStickerLabel(sticker1Str));
+        const sticker2 = new CornerSticker(readCornerStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleCornerTyped(order, buffer, sticker1, sticker2);
+    }
+
+    public isValidThreeStyleCornerTyped(order: number, buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
+        let algCube : Cube333;
+        let initialState;
+        if (order === 3) {
+            algCube = new Cube333();
+            initialState = State333.getInitialState();
+        } else {
+            throw new Error('Not implemented');
+        }
+
         this.moves.map(move => {
             algCube.move(move.getNotation());
         });
@@ -30,7 +48,6 @@ export class Algorithm {
         const newSticker2CO = (sticker2CO - sticker1CO + 3) % 3;
 
         // initialStateからCP, COしたStateを生成して、this.stateと同一かどうか判定する
-        const initialState = State333.getInitialState();
         const cp = initialState.getCp();
         const co = initialState.getCo();
 
@@ -43,13 +60,35 @@ export class Algorithm {
         co[sticker1.getPieceInd()] = newSticker1CO;
         co[sticker2.getPieceInd()] = newSticker2CO;
 
-        const cycledState = new State333(cp, co, initialState.getEp(), initialState.getEo(), initialState.getCenter());
+        let cycledState;
+        if (order === 3){
+            cycledState = new State333(cp, co, undefined, undefined, undefined);
+        } else {
+            throw new Error('Not implemented');
+        }
 
         return algCube.getState().eq(cycledState);
     };
 
-    public isValidThreeStyleEdge(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker): boolean {
-        const algCube = new Cube333();
+    public isValidThreeStyleEdge(order: number, bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new EdgeSticker(readEdgeStickerLabel(bufferStr));
+        const sticker1 = new EdgeSticker(readEdgeStickerLabel(sticker1Str));
+        const sticker2 = new EdgeSticker(readEdgeStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleEdgeTyped(order, buffer, sticker1, sticker2);
+    }
+
+
+    public isValidThreeStyleEdgeTyped(order: number, buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker): boolean {
+        let algCube : Cube333;
+        let initialState : State333;
+        if (order === 3) {
+            algCube = new Cube333();
+            initialState = State333.getInitialState();
+        } else {
+            throw new Error('Not implemented');
+        }
+
         this.moves.map(move => {
             algCube.move(move.getNotation());
         });
@@ -64,7 +103,6 @@ export class Algorithm {
         const newSticker2EO = (sticker2EO - sticker1EO + 2) % 2;
 
         // initialStateからEP, EOしたStateを生成して、this.stateと同一かどうか判定する
-        const initialState = State333.getInitialState();
         const ep = initialState.getEp();
         const eo = initialState.getEo();
 
@@ -77,7 +115,12 @@ export class Algorithm {
         eo[sticker1.getPieceInd()] = newSticker1EO;
         eo[sticker2.getPieceInd()] = newSticker2EO;
 
-        const cycledState = new State333(initialState.getCp(), initialState.getCo(), ep, eo, initialState.getCenter());
+        let cycledState : State333;
+        if (order === 3) {
+            cycledState = new State333(undefined, undefined, ep, eo, undefined);
+        } else {
+            throw new Error('Not implemented');
+        }
 
         return algCube.getState().eq(cycledState);
     };

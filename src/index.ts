@@ -1,3 +1,4 @@
+import {Algorithm} from './Algorithm';
 import {Cube} from './Cube';
 
-export {Cube};
+export {Cube, Algorithm};

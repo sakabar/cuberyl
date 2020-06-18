@@ -38,4 +38,16 @@ export const EdgeStickerLabel = {
     LD: 23,
 } as const;
 
+export const readEdgeStickerLabel = (s:string) => {
+    for (let pair of Object.entries(EdgeStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (key === s) {
+            return val;
+        }
+    }
+
+    throw new Error(`Unexpected edge label: ${s}`);
+}
+
 export type EdgeStickerLabel = typeof EdgeStickerLabel[keyof typeof EdgeStickerLabel];

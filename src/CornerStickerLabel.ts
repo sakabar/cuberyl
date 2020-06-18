@@ -35,4 +35,16 @@ export const CornerStickerLabel = {
     FDL: 23,
 } as const;
 
+export const readCornerStickerLabel = (s:string) => {
+    for (let pair of Object.entries(CornerStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (key === s) {
+            return val;
+        }
+    }
+
+    throw new Error(`Unexpected corner label: ${s}`);
+}
+
 export type CornerStickerLabel = typeof CornerStickerLabel[keyof typeof CornerStickerLabel];

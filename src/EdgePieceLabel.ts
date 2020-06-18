@@ -13,4 +13,16 @@ export const EdgePieceLabel = {
     DL: 11,
 } as const;
 
+export const readEdgePieceLabel = (s:string) => {
+    for (let pair of Object.entries(EdgePieceLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (key === s) {
+            return val;
+        }
+    }
+
+    throw new Error(`Unexpected corner label: ${s}`);
+}
+
 export type EdgePieceLabel = typeof EdgePieceLabel[keyof typeof EdgePieceLabel];

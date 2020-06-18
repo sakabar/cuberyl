@@ -1,15 +1,26 @@
 const _ = require('lodash');
-import {StateInterface} from './StateInterface';
 import {CenterPieceLabel} from './CenterPieceLabel';
 
-export class State333 implements StateInterface {
-    constructor(private cp: Array<number>,
-                private co: Array<number>,
-                private ep: Array<number>,
-                private eo: Array<number>,
-                private center: Array<number>,
+export class State333 {
+    private cp: Array<number>;
+    private co: Array<number>;
+    private ep: Array<number>;
+    private eo: Array<number>;
+    private center: Array<number>;
+
+    constructor(cp: Array<number> | undefined,
+                co: Array<number> | undefined,
+                ep: Array<number> | undefined,
+                eo: Array<number> | undefined,
+                center: Array<number> | undefined,
                 skipValidation=false
                ) {
+
+        this.cp = cp || State333.getInitialState().getCp();
+        this.co = co || State333.getInitialState().getCo();
+        this.ep = ep || State333.getInitialState().getEp();
+        this.eo = eo || State333.getInitialState().getEo();
+        this.center = center || State333.getInitialState().getCenter();
 
         // ParityのチェックでState()の生成を行うので、skipしないと無限ループが発生する
         // また、あえて完成できないキューブをシミュレートするという余地を残す
