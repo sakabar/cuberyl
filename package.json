@@ -1,12 +1,13 @@
 {
   "name": "cuberyl",
   "version": "0.0.1",
-  "description": "NxNxN cube puzzle",
-  "main": "index.js",
+  "description": "NxNxN cube puzzle simulator",
+  "main": "dist/src/index.js",
   "scripts": {
-    "build": "webpack --mode=development",
-    "start": "webpack-dev-server --mode=development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "tsc && mocha dist/test/*.js",
+    "clean": "rm -rf dist && mkdir dist",
+    "prepublishOnly": "npm run clean && npm run test"
   },
   "repository": "git+https://github.com/sakabar/cuberyl.git",
   "keywords": [
@@ -14,7 +15,7 @@
     "puzzle",
     "NxNxN"
   ],
-  "author": "Takafumi Sakakibara",
+  "author": "SAKAKIBARA Takafumi",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sakabar/cuberyl/issues"
@@ -34,7 +35,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@types/lodash": "^4.14.155",
     "lodash": "^4.17.15",
