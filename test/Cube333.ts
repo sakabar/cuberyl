@@ -66,5 +66,13 @@ describe('Cube333.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
+    it("R R' is solved", () => {
+        const cube = new Cube333("R R'");
+        const actual = cube.isSolved();
+        const expected = true
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
 });
 

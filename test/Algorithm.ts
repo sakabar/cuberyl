@@ -13,7 +13,7 @@ describe('Algorithm.ts', () => {
         const sticker2 = new CornerSticker(CornerStickerLabel.RBD);
 
         const alg = new Algorithm("U R D R' U' R D' R'");
-        const actual = alg.isValidThreeStyleCorner(buffer, sticker1, sticker2);
+        const actual = alg.isValidThreeStyleCornerTyped(3, buffer, sticker1, sticker2);
         const expected = true;
 
         chai.assert.deepEqual(actual, expected);
@@ -25,7 +25,15 @@ describe('Algorithm.ts', () => {
         const sticker2 = new CornerSticker(CornerStickerLabel.FLU);
 
         const alg = new Algorithm("L' U R U' L U R' U'");
-        const actual = alg.isValidThreeStyleCorner(buffer, sticker1, sticker2);
+        const actual = alg.isValidThreeStyleCornerTyped(3, buffer, sticker1, sticker2);
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("isValidThreeStyleStr: UBL RBU FLU = [L', U R U']", () => {
+        const alg = new Algorithm("L' U R U' L U R' U'");
+        const actual = alg.isValidThreeStyleCorner(3, 'UBL', 'RBU', 'FLU');
         const expected = true;
 
         chai.assert.deepEqual(actual, expected);
@@ -37,7 +45,7 @@ describe('Algorithm.ts', () => {
         const sticker2 = new EdgeSticker(EdgeStickerLabel.DL);
 
         const alg = new Algorithm("R F' R' S' R F R' S");
-        const actual = alg.isValidThreeStyleEdge(buffer, sticker1, sticker2);
+        const actual = alg.isValidThreeStyleEdgeTyped(3, buffer, sticker1, sticker2);
         const expected = true;
 
         chai.assert.deepEqual(actual, expected);
@@ -49,7 +57,15 @@ describe('Algorithm.ts', () => {
         const sticker2 = new EdgeSticker(EdgeStickerLabel.DB);
 
         const alg = new Algorithm("D R2 S' R2 S D'");
-        const actual = alg.isValidThreeStyleEdge(buffer, sticker1, sticker2);
+        const actual = alg.isValidThreeStyleEdgeTyped(3, buffer, sticker1, sticker2);
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("isValidThreeStyleEdgeStr: DF UR DB = D [R2, S']", () => {
+        const alg = new Algorithm("D R2 S' R2 S D'");
+        const actual = alg.isValidThreeStyleEdge(3, 'DF', 'UR', 'DB');
         const expected = true;
 
         chai.assert.deepEqual(actual, expected);
