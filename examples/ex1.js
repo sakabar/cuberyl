@@ -1,5 +1,4 @@
-// const {Cube} = require('cuberyl');
-const {Cube} = require('../dist/src/index');
+const {Cube} = require('cuberyl');
 
 // 3x3x3 cube
 const cube = new Cube(3);
