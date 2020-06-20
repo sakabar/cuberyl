@@ -1,6 +1,6 @@
 {
   "name": "cuberyl",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NxNxN cube puzzle simulator",
   "main": "dist/src/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
-    "mocha": "^7.2.0",
+    "mocha": "^8.0.1",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
