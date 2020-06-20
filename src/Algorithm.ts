@@ -20,7 +20,7 @@ export class Algorithm {
 
         const cube = new Cube333();
 
-        algorithmStr.split(' ').map(notationStr => {
+        algorithmStr.split(' ').filter(s => s !== '').map(notationStr => {
             const move = new Move(notationStr);
             this.moves.push(move);
 
