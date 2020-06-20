@@ -86,7 +86,14 @@ describe('Algorithm.ts', () => {
     it("threeStyle: D [R2, S']", () => {
         const alg = Algorithm.makeThreeStyle(3, 'D', 'R2', "S'");
         const actual = alg.isValidThreeStyleEdge('DF', 'UR', 'DB');
-        new Algorithm(3, "D R2 S' R2 S D'");
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("threeStyle: [R2, S']", () => {
+        const alg = Algorithm.makeThreeStyle(3, '', 'U2', "M'");
+        const actual = alg.isValidThreeStyleEdge('DF', 'UF', 'UB');
 
         const expected = true;
 
