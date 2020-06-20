@@ -6,14 +6,13 @@ Until now N = 3, and I'm going to implement N = 2, 4, 5.
 
 ## Features
 1. Judge whether a cube is solved or not
-2. Judge a given algorithm is a valid 3-style of Edge/Corner part
+2. Judge a given algorithm is a valid 3-style of edge/corner part
 
 ## Examples
 Example 1 (code: `./examples/ex1.js`)
 
 ```
-// const {Cube} = require('cuberyl');
-const {Cube} = require('../dist/src/index');
+const {Cube} = require('cuberyl');
 
 // 3x3x3 cube
 const cube = new Cube(3);
@@ -41,14 +40,25 @@ while(!cube.isSolved()) {
 Example 2 (code: `./examples/ex2.js`)
 
 ```
-// const {Algorithm} = require('cuberyl');                                                          
-const {Algorithm} = require('../dist/src/index');
+const {Algorithm} = require('cuberyl');
 
-const alg = new Algorithm("U R D R' U' R D' R'");
-const isValidThreeStyle = alg.isValidThreeStyleCorner(3, 'UBL', 'UBR', 'RBD');
+const alg = new Algorithm(3, "U R D R' U' R D' R'");
+const isValidThreeStyle = alg.isValidThreeStyleCorner('UBL', 'UBR', 'RBD');
 
 if (isValidThreeStyle) {
     console.log('OK'); // => OK
 }
 ```
 
+## Breaking Change
+### v0.0.3
+Change I/F
+
+`Algorithm.ts`
+```
+constructor(order, algorithmStr);
+isValidThreeStyleCorner(bufferStr: string, sticker1Str: string, sticker2Str: string);
+isValidThreeStyleCornerTyped(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker);
+isValidThreeStyleEdge(bufferStr: string, sticker1Str: string, sticker2Str: string);
+isValidThreeStyleEdgeTyped(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker);
+```

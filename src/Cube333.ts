@@ -34,8 +34,6 @@ export class Cube333 {
         // ここから下は1回転の場合
         const oneMove = new Move(sequence);
 
-        // TODO: 他のNotationにも対応する
-        // TODO: Caseで網羅的に書く
         const notation = oneMove.getNotation();
         switch (notation) {
             case Notation.R:

@@ -23,4 +23,19 @@ export class Move {
     public getNotation() : Notation {
         return _.cloneDeep(this.notation);
     };
+
+    public makeInverse() : Move {
+        // Notationの命名規則を使う。
+        // x2 -> x2
+        // x' -> x
+        // x -> x'
+
+        if (this.notation.slice(-1) === '2') {
+            return new Move(this.notation);
+        } else if (this.notation.slice(-1) === "'") {
+            return new Move(this.notation.slice(0, -1));
+        } else {
+            return new Move(`${this.notation}'`);
+        }
+    }
 }
