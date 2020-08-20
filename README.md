@@ -20,7 +20,7 @@ console.dir(cube.isSolved()); // true
 
 cube.move("U R'");
 let cnt = 1;
-const isSolved = cube.isSolved(); // false but last time.
+const isSolved = cube.isSolved(); // false
 console.dir(`${cnt} ${isSolved}`);
 
 while(!cube.isSolved()) {
@@ -40,9 +40,9 @@ while(!cube.isSolved()) {
 Example 2 (code: `./examples/ex2.js`)
 
 ```
-const {Algorithm} = require('cuberyl');
+const {Algorithm333} = require('cuberyl');
 
-const alg = new Algorithm(3, "U R D R' U' R D' R'");
+const alg = new Algorithm333("U R D R' U' R D' R'");
 const isValidThreeStyle = alg.isValidThreeStyleCorner('UBL', 'UBR', 'RBD');
 
 if (isValidThreeStyle) {
@@ -51,6 +51,21 @@ if (isValidThreeStyle) {
 ```
 
 ## Breaking Change
+### v0.0.5
+Change I/F
+
+`Algorithm.ts` → `Algorithm333.ts`
+
+also renamed class Algorithm → Algorithm333
+
+`Move.ts` →`Move333.ts`
+
+also renamed class Move → Move333
+
+`Notation.ts` →`Notation333.ts`
+
+also renamed class Notation → Notation333
+
 ### v0.0.3
 Change I/F
 
