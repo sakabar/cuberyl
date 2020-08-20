@@ -6,7 +6,7 @@ console.log(cube.isSolved()); // true
 
 cube.move("U R'");
 let cnt = 1;
-const isSolved = cube.isSolved(); // false but last time.
+const isSolved = cube.isSolved(); // false
 console.log(`${cnt} ${isSolved}`);
 
 while(!cube.isSolved()) {

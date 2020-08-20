@@ -1,6 +1,6 @@
 const _ = require('lodash');
-import {Notation} from './Notation';
-import {Move} from './Move';
+import {Notation333} from './Notation333';
+import {Move333} from './Move333';
 import {State333} from './State333';
 
 export class Cube333 {
@@ -32,217 +32,217 @@ export class Cube333 {
         }
 
         // ここから下は1回転の場合
-        const oneMove = new Move(sequence);
+        const oneMove = new Move333(sequence);
 
         const notation = oneMove.getNotation();
         switch (notation) {
-            case Notation.R:
+            case Notation333.R:
                 this.state = this.state.applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.R2:
+            case Notation333.R2:
                 this.state = this.state
                         .applyMove(State333.getRMoveState())
                         .applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.R_:
+            case Notation333.R_:
                 this.state = this.state
                         .applyMove(State333.getRMoveState())
                         .applyMove(State333.getRMoveState())
                         .applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.U:
+            case Notation333.U:
                 this.state = this.state.applyMove(State333.getUMoveState());
                 break;
 
-            case Notation.U2:
+            case Notation333.U2:
                 this.state = this.state
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getUMoveState());
                 break;
 
-            case Notation.U_:
+            case Notation333.U_:
                 this.state = this.state
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getUMoveState());
                 break;
 
-            case Notation.L:
+            case Notation333.L:
                 this.state = this.state.applyMove(State333.getLMoveState());
                 break;
 
-            case Notation.L2:
+            case Notation333.L2:
                 this.state = this.state
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getLMoveState());
                 break;
 
-            case Notation.L_:
+            case Notation333.L_:
                 this.state = this.state
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getLMoveState());
                 break;
 
-            case Notation.D:
+            case Notation333.D:
                 this.state = this.state.applyMove(State333.getDMoveState());
                 break;
 
-            case Notation.D2:
+            case Notation333.D2:
                 this.state = this.state
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getDMoveState());
                 break;
 
-            case Notation.D_:
+            case Notation333.D_:
                 this.state = this.state
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getDMoveState());
                 break;
 
-            case Notation.F:
+            case Notation333.F:
                 this.state = this.state.applyMove(State333.getFMoveState());
                 break;
 
-            case Notation.F2:
+            case Notation333.F2:
                 this.state = this.state
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getFMoveState());
                 break;
 
-            case Notation.F_:
+            case Notation333.F_:
                 this.state = this.state
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getFMoveState());
                 break;
 
-            case Notation.B:
+            case Notation333.B:
                 this.state = this.state.applyMove(State333.getBMoveState());
                 break;
 
-            case Notation.B2:
+            case Notation333.B2:
                 this.state = this.state
                         .applyMove(State333.getBMoveState())
                         .applyMove(State333.getBMoveState());
                 break;
 
-            case Notation.B_:
+            case Notation333.B_:
                 this.state = this.state
                         .applyMove(State333.getBMoveState())
                         .applyMove(State333.getBMoveState())
                         .applyMove(State333.getBMoveState());
                 break;
 
-            case Notation.E:
+            case Notation333.E:
                 this.state = this.state.applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.E2:
+            case Notation333.E2:
                 this.state = this.state
                         .applyMove(State333.getEMoveState())
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.E_:
+            case Notation333.E_:
                 this.state = this.state
                         .applyMove(State333.getEMoveState())
                         .applyMove(State333.getEMoveState())
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.M:
+            case Notation333.M:
                 this.state = this.state
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.M2:
+            case Notation333.M2:
                 this.state = this.state
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.M_:
+            case Notation333.M_:
                 this.state = this.state
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.S:
+            case Notation333.S:
                 this.state = this.state.applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.S2:
+            case Notation333.S2:
                 this.state = this.state
                         .applyMove(State333.getSMoveState())
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.S_:
+            case Notation333.S_:
                 this.state = this.state
                         .applyMove(State333.getSMoveState())
                         .applyMove(State333.getSMoveState())
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.x:
+            case Notation333.x:
                 this.state = this.state.applyMove(State333.getXMoveState());
                 break;
 
-            case Notation.x2:
+            case Notation333.x2:
                 this.state = this.state
                         .applyMove(State333.getXMoveState())
                         .applyMove(State333.getXMoveState());
                 break;
 
-            case Notation.x_:
+            case Notation333.x_:
                 this.state = this.state
                         .applyMove(State333.getXMoveState())
                         .applyMove(State333.getXMoveState())
                         .applyMove(State333.getXMoveState());
                 break;
 
-            case Notation.y:
+            case Notation333.y:
                 this.state = this.state.applyMove(State333.getYMoveState());
                 break;
 
-            case Notation.y2:
+            case Notation333.y2:
                 this.state = this.state
                         .applyMove(State333.getYMoveState())
                         .applyMove(State333.getYMoveState());
                 break;
 
-            case Notation.y_:
+            case Notation333.y_:
                 this.state = this.state
                         .applyMove(State333.getYMoveState())
                         .applyMove(State333.getYMoveState())
                         .applyMove(State333.getYMoveState());
                 break;
 
-            case Notation.z:
+            case Notation333.z:
                 this.state = this.state.applyMove(State333.getZMoveState());
                 break;
 
-            case Notation.z2:
+            case Notation333.z2:
                 this.state = this.state
                         .applyMove(State333.getZMoveState())
                         .applyMove(State333.getZMoveState());
                 break;
 
-            case Notation.z_:
+            case Notation333.z_:
                 this.state = this.state
                         .applyMove(State333.getZMoveState())
                         .applyMove(State333.getZMoveState())
                         .applyMove(State333.getZMoveState());
                 break;
 
-            case Notation.r:
-            case Notation.Rw:
+            case Notation333.r:
+            case Notation333.Rw:
                 this.state = this.state
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getMMoveState())
@@ -250,8 +250,8 @@ export class Cube333 {
                         .applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.r2:
-            case Notation.Rw2:
+            case Notation333.r2:
+            case Notation333.Rw2:
                 this.state = this.state
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getMMoveState())
@@ -259,8 +259,8 @@ export class Cube333 {
                         .applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.r_:
-            case Notation.Rw_:
+            case Notation333.r_:
+            case Notation333.Rw_:
                 this.state = this.state
                         .applyMove(State333.getMMoveState())
                         .applyMove(State333.getRMoveState())
@@ -268,8 +268,8 @@ export class Cube333 {
                         .applyMove(State333.getRMoveState());
                 break;
 
-            case Notation.u:
-            case Notation.Uw:
+            case Notation333.u:
+            case Notation333.Uw:
                 this.state = this.state
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getEMoveState())
@@ -277,8 +277,8 @@ export class Cube333 {
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.u2:
-            case Notation.Uw2:
+            case Notation333.u2:
+            case Notation333.Uw2:
                 this.state = this.state
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getUMoveState())
@@ -286,8 +286,8 @@ export class Cube333 {
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.u_:
-            case Notation.Uw_:
+            case Notation333.u_:
+            case Notation333.Uw_:
                 this.state = this.state
                         .applyMove(State333.getUMoveState())
                         .applyMove(State333.getUMoveState())
@@ -295,15 +295,15 @@ export class Cube333 {
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.d:
-            case Notation.Dw:
+            case Notation333.d:
+            case Notation333.Dw:
                 this.state = this.state
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.d2:
-            case Notation.Dw2:
+            case Notation333.d2:
+            case Notation333.Dw2:
                 this.state = this.state
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getDMoveState())
@@ -311,8 +311,8 @@ export class Cube333 {
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.d_:
-            case Notation.Dw_:
+            case Notation333.d_:
+            case Notation333.Dw_:
                 this.state = this.state
                         .applyMove(State333.getDMoveState())
                         .applyMove(State333.getDMoveState())
@@ -322,15 +322,15 @@ export class Cube333 {
                         .applyMove(State333.getEMoveState());
                 break;
 
-            case Notation.l:
-            case Notation.Lw:
+            case Notation333.l:
+            case Notation333.Lw:
                 this.state = this.state
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.l2:
-            case Notation.Lw2:
+            case Notation333.l2:
+            case Notation333.Lw2:
                 this.state = this.state
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getLMoveState())
@@ -338,8 +338,8 @@ export class Cube333 {
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.l_:
-            case Notation.Lw_:
+            case Notation333.l_:
+            case Notation333.Lw_:
                 this.state = this.state
                         .applyMove(State333.getLMoveState())
                         .applyMove(State333.getLMoveState())
@@ -349,15 +349,15 @@ export class Cube333 {
                         .applyMove(State333.getMMoveState());
                 break;
 
-            case Notation.f:
-            case Notation.Fw:
+            case Notation333.f:
+            case Notation333.Fw:
                 this.state = this.state
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.f2:
-            case Notation.Fw2:
+            case Notation333.f2:
+            case Notation333.Fw2:
                 this.state = this.state
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getFMoveState())
@@ -365,8 +365,8 @@ export class Cube333 {
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.f_:
-            case Notation.Fw_:
+            case Notation333.f_:
+            case Notation333.Fw_:
                 this.state = this.state
                         .applyMove(State333.getFMoveState())
                         .applyMove(State333.getFMoveState())
@@ -376,26 +376,26 @@ export class Cube333 {
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.b:
-            case Notation.Bw:
-                this.state = this.state
-                        .applyMove(State333.getBMoveState())
-                        .applyMove(State333.getSMoveState())
-                        .applyMove(State333.getSMoveState())
-                        .applyMove(State333.getSMoveState());
-                break;
-
-            case Notation.b2:
-            case Notation.Bw2:
+            case Notation333.b:
+            case Notation333.Bw:
                 this.state = this.state
                         .applyMove(State333.getBMoveState())
+                        .applyMove(State333.getSMoveState())
+                        .applyMove(State333.getSMoveState())
+                        .applyMove(State333.getSMoveState());
+                break;
+
+            case Notation333.b2:
+            case Notation333.Bw2:
+                this.state = this.state
+                        .applyMove(State333.getBMoveState())
                         .applyMove(State333.getBMoveState())
                         .applyMove(State333.getSMoveState())
                         .applyMove(State333.getSMoveState());
                 break;
 
-            case Notation.b_:
-            case Notation.Bw_:
+            case Notation333.b_:
+            case Notation333.Bw_:
                 this.state = this.state
                         .applyMove(State333.getBMoveState())
                         .applyMove(State333.getBMoveState())

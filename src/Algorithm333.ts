@@ -1,5 +1,5 @@
 const _ = require('lodash');
-import {Move} from './Move';
+import {Move333} from './Move333';
 import {Cube333} from './Cube333';
 import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
@@ -7,21 +7,15 @@ import {EdgeSticker} from './EdgeSticker';
 import {readEdgeStickerLabel} from './EdgeStickerLabel';
 import {State333} from './State333';
 
-export class Algorithm {
-    private moves : Array<Move> = [];
-    // FIXME ここ333でいいのか…?
+export class Algorithm333 {
+    private moves : Array<Move333> = [];
     private state : State333;
 
-    constructor(order: number, algorithmStr: string) {
-        // FIXME 333以外のキューブの時は?
-        if (order !== 3) {
-            throw new Error('Not implemented');
-        }
-
+    constructor(algorithmStr: string) {
         const cube = new Cube333();
 
         algorithmStr.split(' ').filter(s => s !== '').map(notationStr => {
-            const move = new Move(notationStr);
+            const move = new Move333(notationStr);
             this.moves.push(move);
 
             cube.move(move.getNotation());
@@ -115,14 +109,14 @@ export class Algorithm {
         return this.state.eq(cycledState);
     };
 
-    public inverse() : Algorithm {
+    public inverse() : Algorithm333 {
         // (A B C)' = C' B' A'
         const newNotations : Array<string> = [];
         this.moves.slice().reverse().map(move => {
             newNotations.push(move.makeInverse().getNotation())
         })
 
-        const newAlg = new Algorithm(3, newNotations.join(' '));
+        const newAlg = new Algorithm333(newNotations.join(' '));
         this.moves = newAlg.getMoves();
         this.state = newAlg.getState();
 
@@ -130,26 +124,26 @@ export class Algorithm {
     }
 
     // setup, move1, move2, move1' move2', setup'
-    public static makeThreeStyle(order: number, setup: string, move1: string, move2: string): Algorithm {
+    public static makeThreeStyle(setup: string, move1: string, move2: string): Algorithm333 {
         const newNotations = [ setup, move1, move2, ];
 
         // move1'
-        newNotations.push(new Algorithm(order, move1).inverse().getNotation());
+        newNotations.push(new Algorithm333(move1).inverse().getNotation());
 
         // move2'
-       newNotations.push(new Algorithm(order, move2).inverse().getNotation());
+        newNotations.push(new Algorithm333(move2).inverse().getNotation());
 
         // setup'
-        newNotations.push(new Algorithm(order, setup).inverse().getNotation());
+        newNotations.push(new Algorithm333(setup).inverse().getNotation());
 
-        return new Algorithm(order, newNotations.join(' '));
+        return new Algorithm333(newNotations.join(' '));
     }
 
     public getState() : State333 {
         return _.cloneDeep(this.state);
     }
 
-    public getMoves() : Array<Move> {
+    public getMoves() : Array<Move333> {
         return _.cloneDeep(this.moves);
     }
 
@@ -157,7 +151,7 @@ export class Algorithm {
         return this.moves.map(m => m.getNotation()).join(' ');
     }
 
-    public eq(alg: Algorithm): boolean {
+    public eq(alg: Algorithm333): boolean {
         return this.state.eq(alg.getState());
     }
 };
