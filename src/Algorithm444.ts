@@ -1,0 +1,166 @@
+const _ = require('lodash');
+import {Move444} from './Move444';
+import {Cube444} from './Cube444';
+import {CornerSticker} from './CornerSticker';
+import {readCornerStickerLabel} from './CornerStickerLabel';
+import {WingEdgeSticker} from './WingEdgeSticker';
+import {readWingEdgeStickerLabel} from './WingEdgeStickerLabel';
+import {State444} from './State444';
+
+export class Algorithm444 {
+    private moves : Array<Move444> = [];
+    private state : State444;
+
+    constructor(algorithmStr: string) {
+        const cube = new Cube444();
+
+        algorithmStr.split(' ').filter(s => s !== '').map(notationStr => {
+            const move = new Move444(notationStr);
+            this.moves.push(move);
+
+            cube.move(move.getNotation());
+        });
+
+        this.state = cube.getState();
+    };
+
+    // FIXME 型が違うだけで、実装が333とほぼ一致しているので抽象化したい
+    // Stateをパートごとに持てばいいのかな?
+    public isValidThreeStyleCorner(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new CornerSticker(readCornerStickerLabel(bufferStr));
+        const sticker1 = new CornerSticker(readCornerStickerLabel(sticker1Str));
+        const sticker2 = new CornerSticker(readCornerStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleCornerTyped(buffer, sticker1, sticker2);
+    }
+
+    public isValidThreeStyleCornerTyped(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
+        let algCube : Cube444;
+        let initialState;
+
+        algCube = new Cube444();
+        initialState = State444.getInitialState();
+
+        this.moves.map(move => {
+            algCube.move(move.getNotation());
+        });
+
+        const bufferCO = buffer.getOrientation();
+        const sticker1CO = sticker1.getOrientation();
+        const sticker2CO = sticker2.getOrientation();
+
+        // (負の数) % 3 にならないようにしている
+        const newBufferCO = (bufferCO - sticker2CO + 3) % 3;
+        const newSticker1CO = (sticker1CO - bufferCO + 3) % 3;
+        const newSticker2CO = (sticker2CO - sticker1CO + 3) % 3;
+
+        // initialStateからCP, COしたStateを生成して、this.stateと同一かどうか判定する
+        const cp = initialState.getCp();
+        const co = initialState.getCo();
+
+        const orig_buffer_cp = cp[buffer.getPieceInd()];
+        cp[buffer.getPieceInd()] = cp[sticker2.getPieceInd()];
+        cp[sticker2.getPieceInd()] = cp[sticker1.getPieceInd()];
+        cp[sticker1.getPieceInd()] = orig_buffer_cp;
+
+        co[buffer.getPieceInd()] = newBufferCO;
+        co[sticker1.getPieceInd()] = newSticker1CO;
+        co[sticker2.getPieceInd()] = newSticker2CO;
+
+        const cycledState = new State444(cp, co, undefined, undefined, undefined);
+
+        return algCube.getState().eq(cycledState);
+    };
+
+    private swapWingEdgeSystem(wingEdgeStickerStr: string) {
+        return `${wingEdgeStickerStr[1]}${wingEdgeStickerStr[0]}${wingEdgeStickerStr[2]}`;
+    }
+
+    public isValidThreeStyleWingEdge(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        // bufferStr, sticker1Str, sticker2Strが同じ「系」に属することを確認する
+        let is_FUr_system;
+        let buffer;
+        let sticker1;
+        let sticker2;
+
+        try {
+            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStr));
+            is_FUr_system = true;
+        } catch (e) {
+            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(bufferStr)));
+            is_FUr_system = false;
+        }
+
+        if (is_FUr_system) {
+            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker1Str));
+            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker2Str));
+        } else {
+            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker1Str)));
+            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker2Str)));
+        }
+
+        return this.isValidThreeStyleWingEdgeTyped(buffer, sticker1, sticker2);
+    }
+
+    public isValidThreeStyleWingEdgeTyped(buffer: WingEdgeSticker, sticker1: WingEdgeSticker, sticker2: WingEdgeSticker): boolean {
+        const initialState = State444.getInitialState();
+
+        // initialStateからWPしたStateを生成して、this.stateと同一かどうか判定する
+        const wp = initialState.getWp();
+
+        const orig_buffer_wp = wp[buffer.getPieceInd()];
+        wp[buffer.getPieceInd()] = wp[sticker2.getPieceInd()];
+        wp[sticker2.getPieceInd()] = wp[sticker1.getPieceInd()];
+        wp[sticker1.getPieceInd()] = orig_buffer_wp;
+
+        const cycledState = new State444(undefined, undefined, undefined, wp, false);
+
+        return this.state.eq(cycledState);
+    };
+
+    public inverse() : Algorithm444 {
+        // (A B C)' = C' B' A'
+        const newNotations : Array<string> = [];
+        this.moves.slice().reverse().map(move => {
+            newNotations.push(move.makeInverse().getNotation())
+        })
+
+        const newAlg = new Algorithm444(newNotations.join(' '));
+        this.moves = newAlg.getMoves();
+        this.state = newAlg.getState();
+
+        return this;
+    }
+
+    // setup, move1, move2, move1' move2', setup'
+    public static makeThreeStyle(setup: string, move1: string, move2: string): Algorithm444 {
+        const newNotations = [ setup, move1, move2, ];
+
+        // move1'
+        newNotations.push(new Algorithm444(move1).inverse().getNotation());
+
+        // move2'
+        newNotations.push(new Algorithm444(move2).inverse().getNotation());
+
+        // setup'
+        newNotations.push(new Algorithm444(setup).inverse().getNotation());
+
+        return new Algorithm444(newNotations.join(' '));
+    }
+
+    public getState() : State444 {
+        return _.cloneDeep(this.state);
+    }
+
+    public getMoves() : Array<Move444> {
+        return _.cloneDeep(this.moves);
+    }
+
+    public getNotation() : string {
+        return this.moves.map(m => m.getNotation()).join(' ');
+    }
+
+    public eq(alg: Algorithm444): boolean {
+        return this.state.eq(alg.getState());
+    }
+};
