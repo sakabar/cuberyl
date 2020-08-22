@@ -2,7 +2,7 @@
 
 Cuberyl (kjúːberəl) is a Javascript library to simulate NxNxN cube puzzle.
 
-Until now N = 3, and I'm going to implement N = 2, 4, 5.
+Until now N = 3, 4 and I'm going to implement N = 2, 5.
 
 ## Features
 1. Judge whether a cube is solved or not
@@ -20,7 +20,7 @@ console.dir(cube.isSolved()); // true
 
 cube.move("U R'");
 let cnt = 1;
-const isSolved = cube.isSolved(); // false but last time.
+const isSolved = cube.isSolved(); // false
 console.dir(`${cnt} ${isSolved}`);
 
 while(!cube.isSolved()) {
@@ -40,25 +40,12 @@ while(!cube.isSolved()) {
 Example 2 (code: `./examples/ex2.js`)
 
 ```
-const {Algorithm} = require('cuberyl');
+const {Algorithm333} = require('cuberyl');
 
-const alg = new Algorithm(3, "U R D R' U' R D' R'");
+const alg = new Algorithm333("U R D R' U' R D' R'");
 const isValidThreeStyle = alg.isValidThreeStyleCorner('UBL', 'UBR', 'RBD');
 
 if (isValidThreeStyle) {
     console.log('OK'); // => OK
 }
-```
-
-## Breaking Change
-### v0.0.3
-Change I/F
-
-`Algorithm.ts`
-```
-constructor(order, algorithmStr);
-isValidThreeStyleCorner(bufferStr: string, sticker1Str: string, sticker2Str: string);
-isValidThreeStyleCornerTyped(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker);
-isValidThreeStyleEdge(bufferStr: string, sticker1Str: string, sticker2Str: string);
-isValidThreeStyleEdgeTyped(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker);
 ```

@@ -1,4 +1,4 @@
-export const Notation = {
+export const Notation333 = {
     R: "R",
     R_: "R'",
     R2: "R2",
@@ -96,4 +96,4 @@ export const Notation = {
     Bw2: "Bw2",
 } as const;
 
-export type Notation = typeof Notation[keyof typeof Notation];
+export type Notation333 = typeof Notation333[keyof typeof Notation333];
