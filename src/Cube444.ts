@@ -297,8 +297,6 @@ export class Cube444 {
             case Notation444.Rw:
                 this.state = this.state
                         .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
                         .applyMove(State444.getRMoveState());
                 break;
 
@@ -313,6 +311,8 @@ export class Cube444 {
             case Notation444.Rw_:
                 this.state = this.state
                         .applyMove(State444.getSliceRMoveState())
+                        .applyMove(State444.getSliceRMoveState())
+                        .applyMove(State444.getSliceRMoveState())
                         .applyMove(State444.getRMoveState())
                         .applyMove(State444.getRMoveState())
                         .applyMove(State444.getRMoveState());
@@ -321,8 +321,6 @@ export class Cube444 {
             case Notation444.Uw:
                 this.state = this.state
                         .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
                         .applyMove(State444.getSliceUMoveState());
                 break;
 
@@ -339,6 +337,8 @@ export class Cube444 {
                         .applyMove(State444.getUMoveState())
                         .applyMove(State444.getUMoveState())
                         .applyMove(State444.getUMoveState())
+                        .applyMove(State444.getSliceUMoveState())
+                        .applyMove(State444.getSliceUMoveState())
                         .applyMove(State444.getSliceUMoveState());
                 break;
 
@@ -417,8 +417,6 @@ export class Cube444 {
             case Notation444.Bw:
                 this.state = this.state
                         .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
                         .applyMove(State444.getSliceBMoveState());
                 break;
 
@@ -435,6 +433,8 @@ export class Cube444 {
                         .applyMove(State444.getBMoveState())
                         .applyMove(State444.getBMoveState())
                         .applyMove(State444.getBMoveState())
+                        .applyMove(State444.getSliceBMoveState())
+                        .applyMove(State444.getSliceBMoveState())
                         .applyMove(State444.getSliceBMoveState());
                 break;
 

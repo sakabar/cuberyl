@@ -5,6 +5,8 @@ import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
 import {WingEdgeSticker} from './WingEdgeSticker';
 import {readWingEdgeStickerLabel} from './WingEdgeStickerLabel';
+import {XCenterSticker} from './XCenterSticker';
+import {readXCenterStickerLabel} from './XCenterStickerLabel';
 import {State444} from './State444';
 
 export class Algorithm444 {
@@ -114,6 +116,32 @@ export class Algorithm444 {
         wp[sticker1.getPieceInd()] = orig_buffer_wp;
 
         const cycledState = new State444(undefined, undefined, undefined, wp, false);
+
+        return this.state.eq(cycledState);
+    };
+
+    public isValidThreeStyleXCenter(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new XCenterSticker(readXCenterStickerLabel(bufferStr));
+        const sticker1 = new XCenterSticker(readXCenterStickerLabel(sticker1Str));
+        const sticker2 = new XCenterSticker(readXCenterStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleXCenterTyped(buffer, sticker1, sticker2);
+    }
+
+    public isValidThreeStyleXCenterTyped(buffer: XCenterSticker, sticker1: XCenterSticker, sticker2: XCenterSticker): boolean {
+        const initialState = State444.getInitialState();
+
+        // initialStateからXPしたStateを生成して、this.stateと同一かどうか判定する
+        const xp = initialState.getXp();
+
+        const orig_buffer_xp = xp[buffer.getPieceInd()];
+        xp[buffer.getPieceInd()] = xp[sticker2.getPieceInd()];
+        xp[sticker2.getPieceInd()] = xp[sticker1.getPieceInd()];
+        xp[sticker1.getPieceInd()] = orig_buffer_xp;
+
+        const cycledState = new State444(undefined, undefined, xp, undefined, false);
+        console.log(cycledState);
+        console.log(this.state);
 
         return this.state.eq(cycledState);
     };

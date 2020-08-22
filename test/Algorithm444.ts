@@ -4,6 +4,8 @@ import {CornerSticker} from '../src/CornerSticker';
 import {CornerStickerLabel} from '../src/CornerStickerLabel';
 import {WingEdgeSticker} from '../src/WingEdgeSticker';
 import {WingEdgeStickerLabel} from '../src/WingEdgeStickerLabel';
+import {XCenterSticker} from '../src/XCenterSticker';
+import {XCenterStickerLabel} from '../src/XCenterStickerLabel';
 
 
 describe('Algorithm444.ts', () => {
@@ -62,6 +64,26 @@ describe('Algorithm444.ts', () => {
 
         const alg = new Algorithm444("U' R U r' U' R' U r");
         const actual = alg.isValidThreeStyleWingEdgeTyped(buffer, sticker1, sticker2);
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("isValidThreeStyleStr: Ubl Rdf Fdr = [Rw: [r u' r', U2]]", () => {
+        const alg = new Algorithm444("Rw r u' r' U2 r u r' U2 Rw'");
+        const actual = alg.isValidThreeStyleXCenter('Ubl', 'Rdf', 'Fdr');
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("isValidThreeStyleXCenter: Ubl Rdf Fdr = [Rw: [r u' r', U2]]", () => {
+        const buffer   = new XCenterSticker(XCenterStickerLabel.Ubl);
+        const sticker1 = new XCenterSticker(XCenterStickerLabel.Rdf);
+        const sticker2 = new XCenterSticker(XCenterStickerLabel.Fdr);
+
+        const alg = new Algorithm444("Rw r u' r' U2 r u r' U2 Rw'");
+        const actual = alg.isValidThreeStyleXCenterTyped(buffer, sticker1, sticker2);
         const expected = true;
 
         chai.assert.deepEqual(actual, expected);
