@@ -10,7 +10,10 @@ import {
     numberToWingEdgeStickerLabel,
 } from './WingEdgeStickerLabel';
 import {XCenterSticker} from './XCenterSticker';
-import {readXCenterStickerLabel} from './XCenterStickerLabel';
+import {
+    readXCenterStickerLabel,
+    numberToXCenterStickerLabel,
+} from './XCenterStickerLabel';
 import {State444} from './State444';
 
 export class Algorithm444 {
@@ -212,6 +215,33 @@ export class Algorithm444 {
         } else {
             return ans.map(stickerStr => Algorithm444.swapWingEdgeSystem(stickerStr));
         }
+    }
+
+    public detectThreeStyleXCenterStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const xp = cube.getState().getXp();
+
+        return Algorithm444.detectThreeStyleXCenterStickersXp(bufferStickerStr, xp);
+    }
+
+    public static detectThreeStyleXCenterStickersXp(bufferStickerStr: string, xp: Array<number>) : Array<string> {
+        const bufferSticker : XCenterSticker = new XCenterSticker(readXCenterStickerLabel(bufferStickerStr));
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = xp[bufferPieceInd];
+        const sticker2PieceInd = xp[sticker1PieceInd];
+
+        if (xp[sticker2PieceInd] !== bufferPieceInd) {
+            return [];
+        }
+
+        return [
+           bufferSticker.toString(),
+           new XCenterSticker(numberToXCenterStickerLabel(sticker1PieceInd)).toString(),
+           new XCenterSticker(numberToXCenterStickerLabel(sticker2PieceInd)).toString(),
+       ];
     }
 
     // setup, move1, move2, move1' move2', setup'

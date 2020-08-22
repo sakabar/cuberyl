@@ -46,4 +46,31 @@ export const readXCenterStickerLabel = (s:string) => {
     throw new Error(`Unexpected x-center label: ${s}`);
 }
 
+export const xCenterStickerLabelToString = (l: XCenterStickerLabel) => {
+    for (let pair of Object.entries(XCenterStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (val === l) {
+            return key;
+        }
+    }
+
+    throw new Error(`Unexpected x-center label: ${l}`);
+};
+
+export const numberToXCenterStickerLabel = (n: number) => {
+    for (let pair of Object.entries(XCenterStickerLabel)) {
+        // const key = pair[0];
+        const val = pair[1];
+        if (val === n) {
+            const ans : XCenterStickerLabel = val;
+            return ans;
+        }
+    }
+
+    throw new Error(`Unexpected x-center label: ${n}`);
+};
+
+
+
 export type XCenterStickerLabel = typeof XCenterStickerLabel[keyof typeof XCenterStickerLabel];

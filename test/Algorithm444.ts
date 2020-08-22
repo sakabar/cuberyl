@@ -136,4 +136,22 @@ describe('Algorithm444.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("detect x-center threeStyle: [d', r U2 r']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "d'", "r U2 r'");
+        const actual = alg.detectThreeStyleXCenterStickers('Ubl');
+
+        const expected = [ 'Ubl', 'Rbd', 'Fdr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect x-center threeStyle: [d', r U2 r']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "d'", "r U2 r'");
+        const actual = alg.detectThreeStyleXCenterStickers('Rbd');
+
+        const expected = [ 'Rbd', 'Fdr', 'Ubl', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
 });
