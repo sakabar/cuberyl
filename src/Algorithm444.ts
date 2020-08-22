@@ -1,12 +1,19 @@
 const _ = require('lodash');
+import {Algorithm333} from './Algorithm333';
 import {Move444} from './Move444';
 import {Cube444} from './Cube444';
 import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
 import {WingEdgeSticker} from './WingEdgeSticker';
-import {readWingEdgeStickerLabel} from './WingEdgeStickerLabel';
+import {
+    readWingEdgeStickerLabel,
+    numberToWingEdgeStickerLabel,
+} from './WingEdgeStickerLabel';
 import {XCenterSticker} from './XCenterSticker';
-import {readXCenterStickerLabel} from './XCenterStickerLabel';
+import {
+    readXCenterStickerLabel,
+    numberToXCenterStickerLabel,
+} from './XCenterStickerLabel';
 import {State444} from './State444';
 
 export class Algorithm444 {
@@ -74,31 +81,31 @@ export class Algorithm444 {
         return algCube.getState().eq(cycledState);
     };
 
-    private swapWingEdgeSystem(wingEdgeStickerStr: string) {
+    private static swapWingEdgeSystem(wingEdgeStickerStr: string) {
         return `${wingEdgeStickerStr[1]}${wingEdgeStickerStr[0]}${wingEdgeStickerStr[2]}`;
     }
 
     public isValidThreeStyleWingEdge(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
         // bufferStr, sticker1Str, sticker2Strが同じ「系」に属することを確認する
-        let is_FUr_system;
+        let isFUrSystem;
         let buffer;
         let sticker1;
         let sticker2;
 
         try {
             buffer = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStr));
-            is_FUr_system = true;
+            isFUrSystem = true;
         } catch (e) {
-            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(bufferStr)));
-            is_FUr_system = false;
+            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(bufferStr)));
+            isFUrSystem = false;
         }
 
-        if (is_FUr_system) {
+        if (isFUrSystem) {
             sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker1Str));
             sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker2Str));
         } else {
-            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker1Str)));
-            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker2Str)));
+            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker1Str)));
+            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker2Str)));
         }
 
         return this.isValidThreeStyleWingEdgeTyped(buffer, sticker1, sticker2);
@@ -155,6 +162,116 @@ export class Algorithm444 {
         this.state = newAlg.getState();
 
         return this;
+    }
+
+    public detectThreeStyleCornerStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const cp = cube.getState().getCp();
+        const co = cube.getState().getCo();
+
+       const ans = Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check corner only cycle
+        if (this.isValidThreeStyleCornerTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
+    public detectThreeStyleWingEdgeStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const wp = cube.getState().getWp();
+
+        const [ isFUrSystem, ans ] = Algorithm444.detectThreeStyleWingEdgeStickersWp(bufferStickerStr, wp);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check wing edge only cycle
+        if (!this.isValidThreeStyleWingEdgeTyped(ans[0], ans[1], ans[2])) {
+            return [];
+        }
+
+        if (isFUrSystem) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return ans.map(sticker => Algorithm444.swapWingEdgeSystem(sticker.toString()));
+        }
+    }
+
+    public static detectThreeStyleWingEdgeStickersWp(bufferStickerStr: string, wp: Array<number>) : [boolean, Array<WingEdgeSticker>] {
+        let bufferSticker : WingEdgeSticker;
+        let isFUrSystem : boolean;
+        try {
+            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStickerStr));
+            isFUrSystem = true;
+        } catch (e) {
+            const swapped = Algorithm444.swapWingEdgeSystem(bufferStickerStr);
+            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(swapped));
+            isFUrSystem = false;
+        }
+
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = wp[bufferPieceInd];
+        const sticker2PieceInd = wp[sticker1PieceInd];
+
+        if (wp[sticker2PieceInd] !== bufferPieceInd) {
+            return [ isFUrSystem, [] ];
+        }
+
+        const ans = [
+            bufferSticker,
+            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker1PieceInd)),
+            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker2PieceInd)),
+        ];
+
+        return [isFUrSystem, ans];
+    }
+
+    public detectThreeStyleXCenterStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const xp = cube.getState().getXp();
+
+        const ans = Algorithm444.detectThreeStyleXCenterStickersXp(bufferStickerStr, xp);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check x-center only cycle
+        if (this.isValidThreeStyleXCenterTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
+    public static detectThreeStyleXCenterStickersXp(bufferStickerStr: string, xp: Array<number>) : Array<XCenterSticker> {
+        const bufferSticker : XCenterSticker = new XCenterSticker(readXCenterStickerLabel(bufferStickerStr));
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = xp[bufferPieceInd];
+        const sticker2PieceInd = xp[sticker1PieceInd];
+
+        if (xp[sticker2PieceInd] !== bufferPieceInd) {
+            return [];
+        }
+
+        return [
+            bufferSticker,
+            new XCenterSticker(numberToXCenterStickerLabel(sticker1PieceInd)),
+            new XCenterSticker(numberToXCenterStickerLabel(sticker2PieceInd)),
+       ];
     }
 
     // setup, move1, move2, move1' move2', setup'

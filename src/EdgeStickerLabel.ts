@@ -50,4 +50,29 @@ export const readEdgeStickerLabel = (s:string) => {
     throw new Error(`Unexpected edge label: ${s}`);
 }
 
+export const edgeStickerLabelToString = (l: EdgeStickerLabel) => {
+    for (let pair of Object.entries(EdgeStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (val === l) {
+            return key;
+        }
+    }
+
+    throw new Error(`Unexpected edge label: ${l}`);
+};
+
+export const numberToEdgeStickerLabel = (n: number) => {
+    for (let pair of Object.entries(EdgeStickerLabel)) {
+        // const key = pair[0];
+        const val = pair[1];
+        if (val === n) {
+            const ans : EdgeStickerLabel = val;
+            return ans;
+        }
+    }
+
+    throw new Error(`Unexpected edge label: ${n}`);
+};
+
 export type EdgeStickerLabel = typeof EdgeStickerLabel[keyof typeof EdgeStickerLabel];
