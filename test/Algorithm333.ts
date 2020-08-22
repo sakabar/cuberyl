@@ -135,4 +135,19 @@ describe('Algorithm333.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("CANNOT detect mixed threeStyle: [F', R S' R'] + [U, R D R']", () => {
+        const algEdge = Algorithm333.makeThreeStyle('', "F'", "R S' R'");
+        const algCorner = Algorithm333.makeThreeStyle('', "U", "R D R'");
+
+        const alg = new Algorithm333(`${algEdge.getNotation()} ${algCorner.getNotation()}`);
+        const actualEdge = alg.detectThreeStyleEdgeStickers('DF');
+        const actualCorner = alg.detectThreeStyleCornerStickers('UBL');
+
+        // this is not only edge cycle
+        chai.assert.deepEqual(actualEdge, []);
+
+        // this is not only corner cycle
+        chai.assert.deepEqual(actualCorner, []);
+    });
 });

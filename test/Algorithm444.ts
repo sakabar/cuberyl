@@ -154,4 +154,25 @@ describe('Algorithm444.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("CANNOT detect mixed threeStyle: [U, R D R'] + [r', U' R U] + [d', r U2 r']", () => {
+        const algCorner = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const algWingEdge = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const algXCenter = Algorithm444.makeThreeStyle('', "d'", "r U2 r");
+
+        const alg = new Algorithm444(`${algCorner.getNotation()} ${algWingEdge.getNotation()} ${algXCenter.getNotation()}`);
+
+        const actualCorner = alg.detectThreeStyleCornerStickers('UBL');
+        const actualWingEdge = alg.detectThreeStyleWingEdgeStickers('UFr');
+        const actualXCenter = alg.detectThreeStyleXCenterStickers('Ubl');
+
+        // this is not only corner cycle
+        chai.assert.deepEqual(actualCorner, []);
+
+        // // this is not only wing edge cycle
+        chai.assert.deepEqual(actualWingEdge, []);
+
+        // this is not only x-center edge cycle
+        chai.assert.deepEqual(actualXCenter, []);
+    });
 });

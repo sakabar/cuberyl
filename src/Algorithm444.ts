@@ -171,7 +171,17 @@ export class Algorithm444 {
         const cp = cube.getState().getCp();
         const co = cube.getState().getCo();
 
-        return Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
+       const ans = Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check corner only cycle
+        if (this.isValidThreeStyleCornerTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
     }
 
     public detectThreeStyleWingEdgeStickers(bufferStickerStr: string) : Array<string> {
@@ -180,10 +190,24 @@ export class Algorithm444 {
 
         const wp = cube.getState().getWp();
 
-        return Algorithm444.detectThreeStyleWingEdgeStickersWp(bufferStickerStr, wp);
+        const [ isFUrSystem, ans ] = Algorithm444.detectThreeStyleWingEdgeStickersWp(bufferStickerStr, wp);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check wing edge only cycle
+        if (!this.isValidThreeStyleWingEdgeTyped(ans[0], ans[1], ans[2])) {
+            return [];
+        }
+
+        if (isFUrSystem) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return ans.map(sticker => Algorithm444.swapWingEdgeSystem(sticker.toString()));
+        }
     }
 
-    public static detectThreeStyleWingEdgeStickersWp(bufferStickerStr: string, wp: Array<number>) : Array<string> {
+    public static detectThreeStyleWingEdgeStickersWp(bufferStickerStr: string, wp: Array<number>) : [boolean, Array<WingEdgeSticker>] {
         let bufferSticker : WingEdgeSticker;
         let isFUrSystem : boolean;
         try {
@@ -201,20 +225,16 @@ export class Algorithm444 {
         const sticker2PieceInd = wp[sticker1PieceInd];
 
         if (wp[sticker2PieceInd] !== bufferPieceInd) {
-            return [];
+            return [ isFUrSystem, [] ];
         }
 
-       const ans = [
-           bufferSticker.toString(),
-           new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker1PieceInd)).toString(),
-           new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker2PieceInd)).toString(),
-       ];
+        const ans = [
+            bufferSticker,
+            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker1PieceInd)),
+            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker2PieceInd)),
+        ];
 
-        if (isFUrSystem) {
-            return ans;
-        } else {
-            return ans.map(stickerStr => Algorithm444.swapWingEdgeSystem(stickerStr));
-        }
+        return [isFUrSystem, ans];
     }
 
     public detectThreeStyleXCenterStickers(bufferStickerStr: string) : Array<string> {
@@ -223,10 +243,20 @@ export class Algorithm444 {
 
         const xp = cube.getState().getXp();
 
-        return Algorithm444.detectThreeStyleXCenterStickersXp(bufferStickerStr, xp);
+        const ans = Algorithm444.detectThreeStyleXCenterStickersXp(bufferStickerStr, xp);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check x-center only cycle
+        if (this.isValidThreeStyleXCenterTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
     }
 
-    public static detectThreeStyleXCenterStickersXp(bufferStickerStr: string, xp: Array<number>) : Array<string> {
+    public static detectThreeStyleXCenterStickersXp(bufferStickerStr: string, xp: Array<number>) : Array<XCenterSticker> {
         const bufferSticker : XCenterSticker = new XCenterSticker(readXCenterStickerLabel(bufferStickerStr));
         const bufferPieceInd = bufferSticker.getPieceInd();
 
@@ -238,9 +268,9 @@ export class Algorithm444 {
         }
 
         return [
-           bufferSticker.toString(),
-           new XCenterSticker(numberToXCenterStickerLabel(sticker1PieceInd)).toString(),
-           new XCenterSticker(numberToXCenterStickerLabel(sticker2PieceInd)).toString(),
+            bufferSticker,
+            new XCenterSticker(numberToXCenterStickerLabel(sticker1PieceInd)),
+            new XCenterSticker(numberToXCenterStickerLabel(sticker2PieceInd)),
        ];
     }
 
