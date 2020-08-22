@@ -100,4 +100,79 @@ describe('Algorithm444.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('UBL');
+
+        const expected = [ 'UBL', 'UBR', 'RBD', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('BLU');
+
+        const expected = [ 'BLU', 'RBU', 'DBR', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect wing edge threeStyle: [r', U' R U]", () => {
+        const alg = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const actual = alg.detectThreeStyleWingEdgeStickers('FUr');
+
+        const expected = [ 'FUr', 'RFu', 'UBr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect wing edge threeStyle: [r', U' R U]", () => {
+        const alg = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const actual = alg.detectThreeStyleWingEdgeStickers('UFr');
+
+        const expected = [ 'UFr', 'FRu', 'BUr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect x-center threeStyle: [d', r U2 r']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "d'", "r U2 r'");
+        const actual = alg.detectThreeStyleXCenterStickers('Ubl');
+
+        const expected = [ 'Ubl', 'Rbd', 'Fdr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect x-center threeStyle: [d', r U2 r']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "d'", "r U2 r'");
+        const actual = alg.detectThreeStyleXCenterStickers('Rbd');
+
+        const expected = [ 'Rbd', 'Fdr', 'Ubl', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("CANNOT detect mixed threeStyle: [U, R D R'] + [r', U' R U] + [d', r U2 r']", () => {
+        const algCorner = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const algWingEdge = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const algXCenter = Algorithm444.makeThreeStyle('', "d'", "r U2 r");
+
+        const alg = new Algorithm444(`${algCorner.getNotation()} ${algWingEdge.getNotation()} ${algXCenter.getNotation()}`);
+
+        const actualCorner = alg.detectThreeStyleCornerStickers('UBL');
+        const actualWingEdge = alg.detectThreeStyleWingEdgeStickers('UFr');
+        const actualXCenter = alg.detectThreeStyleXCenterStickers('Ubl');
+
+        // this is not only corner cycle
+        chai.assert.deepEqual(actualCorner, []);
+
+        // // this is not only wing edge cycle
+        chai.assert.deepEqual(actualWingEdge, []);
+
+        // this is not only x-center edge cycle
+        chai.assert.deepEqual(actualXCenter, []);
+    });
 });

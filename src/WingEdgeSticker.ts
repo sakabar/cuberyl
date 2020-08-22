@@ -2,7 +2,10 @@ const _ = require('lodash');
 import {Part} from './Part';
 import {PartLabel} from './PartLabel';
 import {StickerInterface} from './StickerInterface';
-import {WingEdgeStickerLabel} from './WingEdgeStickerLabel';
+import {
+    WingEdgeStickerLabel,
+    wingEdgeStickerLabelToString,
+} from './WingEdgeStickerLabel';
 
 export class WingEdgeSticker implements StickerInterface {
     private part : Part = new Part(PartLabel.WING_EDGE, 0);
@@ -24,5 +27,9 @@ export class WingEdgeSticker implements StickerInterface {
 
     public getPieceInd() : number {
         return this.stickerLabel;
+    }
+
+    public toString() : string {
+        return wingEdgeStickerLabelToString(this.stickerLabel);
     }
 }

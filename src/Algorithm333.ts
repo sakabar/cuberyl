@@ -4,7 +4,9 @@ import {Cube333} from './Cube333';
 import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
 import {EdgeSticker} from './EdgeSticker';
-import {readEdgeStickerLabel} from './EdgeStickerLabel';
+import {
+    readEdgeStickerLabel,
+} from './EdgeStickerLabel';
 import {State333} from './State333';
 
 export class Algorithm333 {
@@ -121,6 +123,94 @@ export class Algorithm333 {
         this.state = newAlg.getState();
 
         return this;
+    }
+
+    public detectThreeStyleCornerStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm333(this.getNotation()).inverse();
+        const cube : Cube333 = new Cube333(inversedAlg.getNotation());
+
+        const cp = cube.getState().getCp();
+        const co = cube.getState().getCo();
+
+        const ans = Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check corner only cycle
+        if (this.isValidThreeStyleCornerTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
+    public static detectThreeStyleCornerStickersCpCo(bufferStickerStr: string, cp: Array<number>, co: Array<number>) : Array<CornerSticker> {
+   const bufferStickerLabel = readCornerStickerLabel(bufferStickerStr);
+        const bufferSticker : CornerSticker = new CornerSticker(bufferStickerLabel);
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = cp[bufferPieceInd];
+        const sticker2PieceInd = cp[sticker1PieceInd];
+
+        if (cp[sticker2PieceInd] !== bufferPieceInd) {
+            return [];
+        }
+
+        const sticker1Co = (bufferSticker.getOrientation() + co[bufferPieceInd]) % 3;
+        const sticker2Co = (bufferSticker.getOrientation() + co[sticker2PieceInd]) % 3;
+
+        return [
+            bufferSticker,
+            CornerSticker.fromPieceInfo(sticker1PieceInd, sticker1Co),
+            CornerSticker.fromPieceInfo(sticker2PieceInd, sticker2Co),
+        ];
+    }
+
+    public detectThreeStyleEdgeStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm333(this.getNotation()).inverse();
+        const cube : Cube333 = new Cube333(inversedAlg.getNotation());
+
+        const ep = cube.getState().getEp();
+        const eo = cube.getState().getEo();
+
+        const ans = Algorithm333.detectThreeStyleEdgeStickersEpEo(bufferStickerStr, ep, eo);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check edge only cycle
+        if (this.isValidThreeStyleEdgeTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
+    // this function is used by both 333 and 555 cube
+    public static detectThreeStyleEdgeStickersEpEo(bufferStickerStr: string, ep: Array<number>, eo: Array<number>) : Array<EdgeSticker> {
+        const bufferStickerLabel = readEdgeStickerLabel(bufferStickerStr);
+        const bufferSticker : EdgeSticker = new EdgeSticker(bufferStickerLabel);
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = ep[bufferPieceInd];
+        const sticker2PieceInd = ep[sticker1PieceInd];
+
+        if (ep[sticker2PieceInd] !== bufferPieceInd) {
+            return [];
+        }
+
+        const sticker1Eo = (bufferSticker.getOrientation() + eo[bufferPieceInd]) % 2;
+        const sticker2Eo = (bufferSticker.getOrientation() + eo[sticker2PieceInd]) % 2;
+
+        const sticker1 = EdgeSticker.fromPieceInfo(sticker1PieceInd, sticker1Eo);
+        const sticker2 = EdgeSticker.fromPieceInfo(sticker2PieceInd, sticker2Eo);
+
+        return [
+            bufferSticker,
+            sticker1,
+            sticker2,
+        ];
     }
 
     // setup, move1, move2, move1' move2', setup'

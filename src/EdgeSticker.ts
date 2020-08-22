@@ -2,7 +2,11 @@ const _ = require('lodash');
 import {Part} from './Part';
 import {PartLabel} from './PartLabel';
 import {StickerInterface} from './StickerInterface';
-import {EdgeStickerLabel} from './EdgeStickerLabel';
+import {
+    EdgeStickerLabel,
+    edgeStickerLabelToString,
+    numberToEdgeStickerLabel,
+} from './EdgeStickerLabel';
 
 export class EdgeSticker implements StickerInterface {
     private part : Part = new Part(PartLabel.EDGE, 0);
@@ -10,6 +14,11 @@ export class EdgeSticker implements StickerInterface {
 
     constructor(private stickerLabel: EdgeStickerLabel) {
         this.orientation = stickerLabel % 2;
+    }
+
+    public static fromPieceInfo(pieceInd: number, orientation: number) : EdgeSticker {
+        const stickerLabel = numberToEdgeStickerLabel(2 * pieceInd + (orientation % 2));
+        return new EdgeSticker(stickerLabel);
     }
 
     public getPart(): Part {
@@ -22,5 +31,9 @@ export class EdgeSticker implements StickerInterface {
 
     public getPieceInd() : number {
         return Math.floor(this.stickerLabel / 2);
+    }
+
+    public toString() : string {
+        return edgeStickerLabelToString(this.stickerLabel);
     }
 }

@@ -2,7 +2,10 @@ const _ = require('lodash');
 import {Part} from './Part';
 import {PartLabel} from './PartLabel';
 import {StickerInterface} from './StickerInterface';
-import {XCenterStickerLabel} from './XCenterStickerLabel';
+import {
+    XCenterStickerLabel,
+    xCenterStickerLabelToString,
+} from './XCenterStickerLabel';
 
 export class XCenterSticker implements StickerInterface {
     private part : Part = new Part(PartLabel.X_CENTER, 0);
@@ -23,5 +26,9 @@ export class XCenterSticker implements StickerInterface {
 
     public getPieceInd() : number {
         return this.stickerLabel;
+    }
+
+    public toString() : string {
+        return xCenterStickerLabelToString(this.stickerLabel);
     }
 }

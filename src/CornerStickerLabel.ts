@@ -47,4 +47,30 @@ export const readCornerStickerLabel = (s:string) => {
     throw new Error(`Unexpected corner label: ${s}`);
 }
 
+export const cornerStickerLabelToString = (l: CornerStickerLabel) => {
+    for (let pair of Object.entries(CornerStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (val === l) {
+            return key;
+        }
+    }
+
+    throw new Error(`Unexpected corner label: ${l}`);
+};
+
+export const numberToCornerStickerLabel = (n: number) => {
+    for (let pair of Object.entries(CornerStickerLabel)) {
+        // const key = pair[0];
+        const val = pair[1];
+        if (val === n) {
+            const ans : CornerStickerLabel = val;
+            return ans;
+        }
+    }
+
+    throw new Error(`Unexpected corner label: ${n}`);
+};
+
+
 export type CornerStickerLabel = typeof CornerStickerLabel[keyof typeof CornerStickerLabel];
