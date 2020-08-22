@@ -1,4 +1,5 @@
 const _ = require('lodash');
+import {Algorithm333} from './Algorithm333';
 import {Move444} from './Move444';
 import {Cube444} from './Cube444';
 import {CornerSticker} from './CornerSticker';
@@ -155,6 +156,16 @@ export class Algorithm444 {
         this.state = newAlg.getState();
 
         return this;
+    }
+
+    public detectThreeStyleCornerStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const cp = cube.getState().getCp();
+        const co = cube.getState().getCo();
+
+        return Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
     }
 
     // setup, move1, move2, move1' move2', setup'

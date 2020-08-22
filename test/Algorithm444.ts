@@ -100,4 +100,22 @@ describe('Algorithm444.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('UBL');
+
+        const expected = [ 'UBL', 'UBR', 'RBD', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm444.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('BLU');
+
+        const expected = [ 'BLU', 'RBU', 'DBR', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
 });
