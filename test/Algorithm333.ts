@@ -100,7 +100,7 @@ describe('Algorithm333.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
-    it("detect threeStyle: [F', R S' R']", () => {
+    it("detect edge threeStyle: [F', R S' R']", () => {
         const alg = Algorithm333.makeThreeStyle('', "F'", "R S' R'");
         const actual = alg.detectThreeStyleEdgeStickers('DF');
 
@@ -109,11 +109,29 @@ describe('Algorithm333.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
-    it("detect threeStyle: [F', R S' R']", () => {
+    it("detect edge threeStyle: [F', R S' R']", () => {
         const alg = Algorithm333.makeThreeStyle('', "F'", "R S' R'");
         const actual = alg.detectThreeStyleEdgeStickers('FD');
 
         const expected = [ 'FD', 'FR', 'RB', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm333.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('UBL');
+
+        const expected = [ 'UBL', 'UBR', 'RBD', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect corner threeStyle: [U, R D R']", () => {
+        const alg = Algorithm333.makeThreeStyle('', "U", "R D R'");
+        const actual = alg.detectThreeStyleCornerStickers('BLU');
+
+        const expected = [ 'BLU', 'RBU', 'DBR', ];
 
         chai.assert.deepEqual(actual, expected);
     });
