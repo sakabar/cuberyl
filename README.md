@@ -2,7 +2,7 @@
 
 Cuberyl (kjúːberəl) is a Javascript library to simulate NxNxN cube puzzle.
 
-Until now N = 3, and I'm going to implement N = 2, 4, 5.
+Until now N = 3, 4 and I'm going to implement N = 2, 5.
 
 ## Features
 1. Judge whether a cube is solved or not
@@ -48,32 +48,4 @@ const isValidThreeStyle = alg.isValidThreeStyleCorner('UBL', 'UBR', 'RBD');
 if (isValidThreeStyle) {
     console.log('OK'); // => OK
 }
-```
-
-## Breaking Change
-### v0.0.5
-Change I/F
-
-`Algorithm.ts` → `Algorithm333.ts`
-
-also renamed class Algorithm → Algorithm333
-
-`Move.ts` →`Move333.ts`
-
-also renamed class Move → Move333
-
-`Notation.ts` →`Notation333.ts`
-
-also renamed class Notation → Notation333
-
-### v0.0.3
-Change I/F
-
-`Algorithm.ts`
-```
-constructor(order, algorithmStr);
-isValidThreeStyleCorner(bufferStr: string, sticker1Str: string, sticker2Str: string);
-isValidThreeStyleCornerTyped(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker);
-isValidThreeStyleEdge(bufferStr: string, sticker1Str: string, sticker2Str: string);
-isValidThreeStyleEdgeTyped(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker);
 ```
