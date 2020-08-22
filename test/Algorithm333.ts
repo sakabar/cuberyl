@@ -99,4 +99,22 @@ describe('Algorithm333.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("detect threeStyle: [F', R S' R']", () => {
+        const alg = Algorithm333.makeThreeStyle('', "F'", "R S' R'");
+        const actual = alg.detectThreeStyleEdgeStickers('DF');
+
+        const expected = [ 'DF', 'RF', 'BR', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect threeStyle: [F', R S' R']", () => {
+        const alg = Algorithm333.makeThreeStyle('', "F'", "R S' R'");
+        const actual = alg.detectThreeStyleEdgeStickers('FD');
+
+        const expected = [ 'FD', 'FR', 'RB', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
 });
