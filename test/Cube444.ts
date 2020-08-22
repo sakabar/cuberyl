@@ -1,6 +1,8 @@
 import chai from 'chai';
+import { Algorithm444 } from '../src/Algorithm444';
 import { Cube444 } from '../src/Cube444';
 import { State444 } from '../src/State444';
+
 
 describe('Cube444.ts', () => {
     it('R (I) = R', () => {
@@ -183,5 +185,22 @@ describe('Cube444.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
+    it("is_solved when same center face stickers are swapped each other", () => {
+        // Ubl Ubr Ffu + Ubl Ffu Ufr = Ubl Ubr Ufr (rotation in U face)
+
+        // Ubl Ubr Ffu = [x U' : [r', U' l U]]
+        // Ubl Ubr Ufr = [y' U : [r' d' r, U2]]
+        const alg1 = Algorithm444.makeThreeStyle("x U'", "r'", "U' l U");
+        const alg2 = Algorithm444.makeThreeStyle("y' U", "r' d' r", "U2");
+
+        const cube = new Cube444();
+        cube.move(alg1.getNotation());
+        cube.move(alg2.getNotation());
+
+        const actual = cube.isSolved();
+        const expected = true
+
+        chai.assert.deepEqual(actual, expected);
+    });
 });
 

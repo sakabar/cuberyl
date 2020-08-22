@@ -93,6 +93,23 @@ export class State444 {
         ].every(b => b);
     }
 
+    public isSolved() : boolean {
+        // X-center label (0, 1, 2, 3) is same face (i.e. U);
+        // so, compare (labelId / 4) for judging isSolved()
+
+        const getFaceId = (xCenterStickerLabel: number) => {
+            return Math.floor(xCenterStickerLabel / 4);
+        }
+
+        return [
+            _.isEqual(this.cp, State444.getInitialState().getCp()),
+            _.isEqual(this.co, State444.getInitialState().getCo()),
+            _.isEqual(this.xp.map((label :number) => getFaceId(label)),
+                      State444.getInitialState().getXp().map((label: number) => getFaceId(label))),
+            _.isEqual(this.wp, State444.getInitialState().getWp()),
+        ].every(b => b);
+    }
+
     public static getInitialState(): State444 {
         return new State444(
             [ 0, 1, 2, 3, 4, 5, 6, 7, ],

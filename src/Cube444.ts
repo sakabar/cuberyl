@@ -595,8 +595,7 @@ export class Cube444 {
     }
 
     public isSolved(): boolean {
-        // FIXME センターパーツ同士の入れ換えを許可する
-        return this.state.eq(State444.getInitialState());
+        return this.state.isSolved();
     }
 
     public getState(): State444 {

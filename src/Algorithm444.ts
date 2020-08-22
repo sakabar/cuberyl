@@ -140,9 +140,6 @@ export class Algorithm444 {
         xp[sticker1.getPieceInd()] = orig_buffer_xp;
 
         const cycledState = new State444(undefined, undefined, xp, undefined, false);
-        console.log(cycledState);
-        console.log(this.state);
-
         return this.state.eq(cycledState);
     };
 
