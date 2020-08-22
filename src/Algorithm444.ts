@@ -5,7 +5,10 @@ import {Cube444} from './Cube444';
 import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
 import {WingEdgeSticker} from './WingEdgeSticker';
-import {readWingEdgeStickerLabel} from './WingEdgeStickerLabel';
+import {
+    readWingEdgeStickerLabel,
+    numberToWingEdgeStickerLabel,
+} from './WingEdgeStickerLabel';
 import {XCenterSticker} from './XCenterSticker';
 import {readXCenterStickerLabel} from './XCenterStickerLabel';
 import {State444} from './State444';
@@ -75,31 +78,31 @@ export class Algorithm444 {
         return algCube.getState().eq(cycledState);
     };
 
-    private swapWingEdgeSystem(wingEdgeStickerStr: string) {
+    private static swapWingEdgeSystem(wingEdgeStickerStr: string) {
         return `${wingEdgeStickerStr[1]}${wingEdgeStickerStr[0]}${wingEdgeStickerStr[2]}`;
     }
 
     public isValidThreeStyleWingEdge(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
         // bufferStr, sticker1Str, sticker2Strが同じ「系」に属することを確認する
-        let is_FUr_system;
+        let isFUrSystem;
         let buffer;
         let sticker1;
         let sticker2;
 
         try {
             buffer = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStr));
-            is_FUr_system = true;
+            isFUrSystem = true;
         } catch (e) {
-            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(bufferStr)));
-            is_FUr_system = false;
+            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(bufferStr)));
+            isFUrSystem = false;
         }
 
-        if (is_FUr_system) {
+        if (isFUrSystem) {
             sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker1Str));
             sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker2Str));
         } else {
-            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker1Str)));
-            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(this.swapWingEdgeSystem(sticker2Str)));
+            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker1Str)));
+            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker2Str)));
         }
 
         return this.isValidThreeStyleWingEdgeTyped(buffer, sticker1, sticker2);
@@ -166,6 +169,49 @@ export class Algorithm444 {
         const co = cube.getState().getCo();
 
         return Algorithm333.detectThreeStyleCornerStickersCpCo(bufferStickerStr, cp, co);
+    }
+
+    public detectThreeStyleWingEdgeStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
+        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+
+        const wp = cube.getState().getWp();
+
+        return Algorithm444.detectThreeStyleWingEdgeStickersWp(bufferStickerStr, wp);
+    }
+
+    public static detectThreeStyleWingEdgeStickersWp(bufferStickerStr: string, wp: Array<number>) : Array<string> {
+        let bufferSticker : WingEdgeSticker;
+        let isFUrSystem : boolean;
+        try {
+            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStickerStr));
+            isFUrSystem = true;
+        } catch (e) {
+            const swapped = Algorithm444.swapWingEdgeSystem(bufferStickerStr);
+            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(swapped));
+            isFUrSystem = false;
+        }
+
+        const bufferPieceInd = bufferSticker.getPieceInd();
+
+        const sticker1PieceInd = wp[bufferPieceInd];
+        const sticker2PieceInd = wp[sticker1PieceInd];
+
+        if (wp[sticker2PieceInd] !== bufferPieceInd) {
+            return [];
+        }
+
+       const ans = [
+           bufferSticker.toString(),
+           new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker1PieceInd)).toString(),
+           new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker2PieceInd)).toString(),
+       ];
+
+        if (isFUrSystem) {
+            return ans;
+        } else {
+            return ans.map(stickerStr => Algorithm444.swapWingEdgeSystem(stickerStr));
+        }
     }
 
     // setup, move1, move2, move1' move2', setup'

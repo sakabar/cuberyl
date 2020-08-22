@@ -118,4 +118,22 @@ describe('Algorithm444.ts', () => {
 
         chai.assert.deepEqual(actual, expected);
     });
+
+    it("detect wing edge threeStyle: [r', U' R U]", () => {
+        const alg = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const actual = alg.detectThreeStyleWingEdgeStickers('FUr');
+
+        const expected = [ 'FUr', 'RFu', 'UBr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect wing edge threeStyle: [r', U' R U]", () => {
+        const alg = Algorithm444.makeThreeStyle('', "r'", "U' R U");
+        const actual = alg.detectThreeStyleWingEdgeStickers('UFr');
+
+        const expected = [ 'UFr', 'FRu', 'BUr', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
 });

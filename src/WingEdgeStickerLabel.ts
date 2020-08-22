@@ -44,4 +44,30 @@ export const readWingEdgeStickerLabel = (s:string) => {
     throw new Error(`Unexpected wing edge label: ${s}`);
 }
 
+export const wingEdgeStickerLabelToString = (l: WingEdgeStickerLabel) => {
+    for (let pair of Object.entries(WingEdgeStickerLabel)) {
+        const key = pair[0];
+        const val = pair[1];
+        if (val === l) {
+            return key;
+        }
+    }
+
+    throw new Error(`Unexpected wing edge label: ${l}`);
+};
+
+export const numberToWingEdgeStickerLabel = (n: number) => {
+    for (let pair of Object.entries(WingEdgeStickerLabel)) {
+        // const key = pair[0];
+        const val = pair[1];
+        if (val === n) {
+            const ans : WingEdgeStickerLabel = val;
+            return ans;
+        }
+    }
+
+    throw new Error(`Unexpected wing edge label: ${n}`);
+};
+
+
 export type WingEdgeStickerLabel = typeof WingEdgeStickerLabel[keyof typeof WingEdgeStickerLabel];
