@@ -6,6 +6,11 @@
 > - :bug:        [Bug Fix]
 > - :memo:       [Documentation]
 
+## v0.0.6 (2020/08/23)
+#### :rocket: New Feature
+* `Algorithm333`, `Algorithm444`
+  * [#18](https://github.com/sakabar/cuberyl/pull/18) detect 3-style sticker cycle from the given buffer
+
 ## v0.0.5 (2020/08/22)
 
 #### :boom: Breaking Change
