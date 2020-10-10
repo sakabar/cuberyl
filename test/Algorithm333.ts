@@ -31,6 +31,18 @@ describe('Algorithm333.ts', () => {
         chai.assert.deepEqual(actual, expected);
     });
 
+    it("isValidThreeStyleCorner: UFR RDF UBR = [U, R' D' R]", () => {
+        const buffer   = new CornerSticker(CornerStickerLabel.UFR);
+        const sticker1 = new CornerSticker(CornerStickerLabel.RDF);
+        const sticker2 = new CornerSticker(CornerStickerLabel.UBR);
+
+        const alg = new Algorithm333("U R' D' R U' R' D R");
+        const actual = alg.isValidThreeStyleCornerTyped(buffer, sticker1, sticker2);
+        const expected = true;
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
     it("isValidThreeStyleStr: UBL RBU FLU = [L', U R U']", () => {
         const alg = new Algorithm333("L' U R U' L U R' U'");
         const actual = alg.isValidThreeStyleCorner('UBL', 'RBU', 'FLU');
@@ -132,6 +144,15 @@ describe('Algorithm333.ts', () => {
         const actual = alg.detectThreeStyleCornerStickers('BLU');
 
         const expected = [ 'BLU', 'RBU', 'DBR', ];
+
+        chai.assert.deepEqual(actual, expected);
+    });
+
+    it("detect corner threeStyle: [U, R' D' R]", () => {
+        const alg = Algorithm333.makeThreeStyle('', "U", "R' D' R");
+        const actual = alg.detectThreeStyleCornerStickers('UFR');
+
+        const expected = [ 'UFR', 'RDF', 'UBR', ];
 
         chai.assert.deepEqual(actual, expected);
     });

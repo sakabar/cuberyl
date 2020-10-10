@@ -6,6 +6,11 @@
 > - :bug:        [Bug Fix]
 > - :memo:       [Documentation]
 
+## v0.0.7 (2020/10/10)
+#### :bug: Bug Fix
+* `Algorithm333`
+  * [#22](https://github.com/sakabar/cuberyl/pull/22) detect corner 3-style sticker cycle from the given buffer
+
 ## v0.0.6 (2020/08/23)
 #### :rocket: New Feature
 * `Algorithm333`, `Algorithm444`

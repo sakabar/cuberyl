@@ -146,7 +146,7 @@ export class Algorithm333 {
     }
 
     public static detectThreeStyleCornerStickersCpCo(bufferStickerStr: string, cp: Array<number>, co: Array<number>) : Array<CornerSticker> {
-   const bufferStickerLabel = readCornerStickerLabel(bufferStickerStr);
+        const bufferStickerLabel = readCornerStickerLabel(bufferStickerStr);
         const bufferSticker : CornerSticker = new CornerSticker(bufferStickerLabel);
         const bufferPieceInd = bufferSticker.getPieceInd();
 
@@ -157,8 +157,11 @@ export class Algorithm333 {
             return [];
         }
 
-        const sticker1Co = (bufferSticker.getOrientation() + co[bufferPieceInd]) % 3;
-        const sticker2Co = (bufferSticker.getOrientation() + co[sticker2PieceInd]) % 3;
+        // look at buffer piece
+        const sticker1Co = (bufferSticker.getOrientation() - co[bufferPieceInd] + 3) % 3;
+
+        // look at 1st piece
+        const sticker2Co = (sticker1Co - co[sticker1PieceInd] + 3) % 3;
 
         return [
             bufferSticker,
@@ -200,8 +203,11 @@ export class Algorithm333 {
             return [];
         }
 
-        const sticker1Eo = (bufferSticker.getOrientation() + eo[bufferPieceInd]) % 2;
-        const sticker2Eo = (bufferSticker.getOrientation() + eo[sticker2PieceInd]) % 2;
+        // look at buffer piece
+        const sticker1Eo = (bufferSticker.getOrientation() - eo[bufferPieceInd] + 2) % 2;
+
+        // look at 1st piece
+        const sticker2Eo = (sticker1Eo - eo[sticker1PieceInd] + 2) % 2;
 
         const sticker1 = EdgeSticker.fromPieceInfo(sticker1PieceInd, sticker1Eo);
         const sticker2 = EdgeSticker.fromPieceInfo(sticker2PieceInd, sticker2Eo);
