@@ -8,7 +8,7 @@ export class Move444 {
         let notation : Notation444 | undefined;
 
         for (let val of Object.values(Notation444)) {
-            if (val === notationStr) {
+            if (val === notationStr.replace("'2", '2')) {
                 notation = val;
             }
         }

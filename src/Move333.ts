@@ -8,7 +8,7 @@ export class Move333 {
         let notation : Notation333 | undefined;
 
         for (let val of Object.values(Notation333)) {
-            if (val === notationStr) {
+            if (val === notationStr.replace("'2", '2')) {
                 notation = val;
             }
         }
