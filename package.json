@@ -1,6 +1,6 @@
 {
   "name": "cuberyl",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "NxNxN cube puzzle simulator",
   "main": "dist/src/index.js",
   "scripts": {

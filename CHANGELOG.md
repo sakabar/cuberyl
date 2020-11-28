@@ -6,6 +6,11 @@
 > - :bug:        [Bug Fix]
 > - :memo:       [Documentation]
 
+## v0.0.8 (2020/11/28)
+#### :rocket: New Feature
+* `Move333`, `Move444`
+  * [#25](https://github.com/sakabar/cuberyl/pull/25) allow prime-two notation such as R'2
+
 ## v0.0.7 (2020/10/10)
 #### :bug: Bug Fix
 * `Algorithm333`
