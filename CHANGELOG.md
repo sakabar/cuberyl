@@ -6,6 +6,11 @@
 > - :bug:        [Bug Fix]
 > - :memo:       [Documentation]
 
+## v1.0.0 (2021/01/03)
+#### :rocket: New Feature
+* `Cube555`, `Algorithm555`
+  * [#28](https://github.com/sakabar/cuberyl/pull/28) simulate 555 cube
+
 ## v0.0.8 (2020/11/28)
 #### :rocket: New Feature
 * `Move333`, `Move444`
