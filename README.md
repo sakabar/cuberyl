@@ -2,7 +2,7 @@
 
 Cuberyl (kjúːberəl) is a Javascript library to simulate NxNxN cube puzzle.
 
-Until now N = 3, 4 and I'm going to implement N = 2, 5.
+Until now N = 3, 4, 5.
 
 ## Features
 1. Judge whether a cube is solved or not
