@@ -51,7 +51,6 @@ export class State333 {
         if (!this.isSameParity()) {
             throw new Error(`This state makes 2-cycle, CP: ${cp}, EP: ${ep}, center: ${center}`);
         }
-
     }
 
     private isValidCp(): boolean {
@@ -102,7 +101,7 @@ export class State333 {
         return permCnt % 2;
     }
 
-    private isSameParity(): boolean {
+    public isSameParity(): boolean {
         // まず持ち替えてセンターの向きを正す
 
         // まず白面を上面に持ってくる
