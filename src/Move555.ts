@@ -1,13 +1,13 @@
 const _ = require('lodash');
-import {Notation444} from './Notation444';
+import {Notation555} from './Notation555';
 
-export class Move444 {
-    private notation: Notation444;
+export class Move555 {
+    private notation: Notation555;
 
     constructor(notationStr: string) {
-        let notation : Notation444 | undefined;
+        let notation : Notation555 | undefined;
 
-        for (let val of Object.values(Notation444)) {
+        for (let val of Object.values(Notation555)) {
             if (val === notationStr.replace("'2", '2')) {
                 notation = val;
             }
@@ -20,22 +20,22 @@ export class Move444 {
         this.notation = notation;
     };
 
-    public getNotation() : Notation444 {
+    public getNotation() : Notation555 {
         return _.cloneDeep(this.notation);
     };
 
-    public makeInverse() : Move444 {
+    public makeInverse() : Move555 {
         // Notationの命名規則を使う。
         // x2 -> x2
         // x' -> x
         // x -> x'
 
         if (this.notation.slice(-1) === '2') {
-            return new Move444(this.notation);
+            return new Move555(this.notation);
         } else if (this.notation.slice(-1) === "'") {
-            return new Move444(this.notation.slice(0, -1));
+            return new Move555(this.notation.slice(0, -1));
         } else {
-            return new Move444(`${this.notation}'`);
+            return new Move555(`${this.notation}'`);
         }
     }
 }

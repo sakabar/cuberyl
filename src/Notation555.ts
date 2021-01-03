@@ -1,4 +1,4 @@
-export const Notation444 = {
+export const Notation555 = {
     R: "R",
     R_: "R'",
     R2: "R2",
@@ -23,17 +23,17 @@ export const Notation444 = {
     B_: "B'",
     B2: "B2",
 
-    // E: "E",
-    // E_: "E'",
-    // E2: "E2",
+    E: "E",
+    E_: "E'",
+    E2: "E2",
 
-    // M: "M",
-    // M_: "M'",
-    // M2: "M2",
+    M: "M",
+    M_: "M'",
+    M2: "M2",
 
-    // S: "S",
-    // S_: "S'",
-    // S2: "S2",
+    S: "S",
+    S_: "S'",
+    S2: "S2",
 
     x: "x",
     x_: "x'",
@@ -118,6 +118,30 @@ export const Notation444 = {
     '3Bw': "3Bw",
     '3Bw_': "3Bw'",
     '3Bw2': "3Bw2",
+
+    '4Rw': "4Rw",
+    '4Rw_': "4Rw'",
+    '4Rw2': "4Rw2",
+
+    '4Uw': "4Uw",
+    '4Uw_': "4Uw'",
+    '4Uw2': "4Uw2",
+
+    '4Lw': "4Lw",
+    '4Lw_': "4Lw'",
+    '4Lw2': "4Lw2",
+
+    '4Dw': "4Dw",
+    '4Dw_': "4Dw'",
+    '4Dw2': "4Dw2",
+
+    '4Fw': "4Fw",
+    '4Fw_': "4Fw'",
+    '4Fw2': "4Fw2",
+
+    '4Bw': "4Bw",
+    '4Bw_': "4Bw'",
+    '4Bw2': "4Bw2",
 } as const;
 
-export type Notation444 = typeof Notation444[keyof typeof Notation444];
+export type Notation555 = typeof Notation555[keyof typeof Notation555];

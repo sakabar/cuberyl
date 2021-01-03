@@ -1,41 +1,40 @@
-export const XCenterStickerLabel = {
+export const TCenterStickerLabel = {
     // Speffz order
     // https://www.speedsolving.com/wiki/index.php/Speffz
-    // 2nd and 3rd letter is alphabet order
 
-    Ubl: 0,
-    Ubr: 1,
-    Ufr: 2,
-    Ufl: 3,
+    Ub: 0,
+    Ur: 1,
+    Uf: 2,
+    Ul: 3,
 
-    Lbu: 4,
-    Lfu: 5,
-    Ldf: 6,
-    Lbd: 7,
+    Lu: 4,
+    Lf: 5,
+    Ld: 6,
+    Lb: 7,
 
-    Flu: 8,
-    Fru: 9,
-    Fdr: 10,
-    Fdl: 11,
+    Fu: 8,
+    Fr: 9,
+    Fd: 10,
+    Fl: 11,
 
-    Rfu: 12,
-    Rbu: 13,
-    Rbd: 14,
-    Rdf: 15,
+    Ru: 12,
+    Rb: 13,
+    Rd: 14,
+    Rf: 15,
 
-    Bru: 16,
-    Blu: 17,
-    Bdl: 18,
-    Bdr: 19,
+    Bu: 16,
+    Bl: 17,
+    Bd: 18,
+    Br: 19,
 
-    Dfl: 20,
-    Dfr: 21,
-    Dbr: 22,
-    Dbl: 23,
+    Df: 20,
+    Dr: 21,
+    Db: 22,
+    Dl: 23,
 } as const;
 
-export const readXCenterStickerLabel = (s:string) => {
-    for (let pair of Object.entries(XCenterStickerLabel)) {
+export const readTCenterStickerLabel = (s:string) => {
+    for (let pair of Object.entries(TCenterStickerLabel)) {
         const key = pair[0];
         const val = pair[1];
         if (key === s) {
@@ -43,11 +42,11 @@ export const readXCenterStickerLabel = (s:string) => {
         }
     }
 
-    throw new Error(`Unexpected x-center label: ${s}`);
+    throw new Error(`Unexpected t-center label: ${s}`);
 }
 
-export const xCenterStickerLabelToString = (l: XCenterStickerLabel) => {
-    for (let pair of Object.entries(XCenterStickerLabel)) {
+export const tCenterStickerLabelToString = (l: TCenterStickerLabel) => {
+    for (let pair of Object.entries(TCenterStickerLabel)) {
         const key = pair[0];
         const val = pair[1];
         if (val === l) {
@@ -55,22 +54,22 @@ export const xCenterStickerLabelToString = (l: XCenterStickerLabel) => {
         }
     }
 
-    throw new Error(`Unexpected x-center label: ${l}`);
+    throw new Error(`Unexpected t-center label: ${l}`);
 };
 
-export const numberToXCenterStickerLabel = (n: number) => {
-    for (let pair of Object.entries(XCenterStickerLabel)) {
+export const numberToTCenterStickerLabel = (n: number) => {
+    for (let pair of Object.entries(TCenterStickerLabel)) {
         // const key = pair[0];
         const val = pair[1];
         if (val === n) {
-            const ans : XCenterStickerLabel = val;
+            const ans : TCenterStickerLabel = val;
             return ans;
         }
     }
 
-    throw new Error(`Unexpected x-center label: ${n}`);
+    throw new Error(`Unexpected t-center label: ${n}`);
 };
 
 
 
-export type XCenterStickerLabel = typeof XCenterStickerLabel[keyof typeof XCenterStickerLabel];
+export type TCenterStickerLabel = typeof TCenterStickerLabel[keyof typeof TCenterStickerLabel];

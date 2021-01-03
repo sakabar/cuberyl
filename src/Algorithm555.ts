@@ -1,30 +1,38 @@
 const _ = require('lodash');
 import {Algorithm333} from './Algorithm333';
-import {Move444} from './Move444';
-import {Cube444} from './Cube444';
+import {Algorithm444} from './Algorithm444';
+import {Move555} from './Move555';
+import {Cube555} from './Cube555';
 import {CornerSticker} from './CornerSticker';
 import {readCornerStickerLabel} from './CornerStickerLabel';
+import {EdgeSticker} from './EdgeSticker';
+import {
+    readEdgeStickerLabel,
+} from './EdgeStickerLabel';
 import {WingEdgeSticker} from './WingEdgeSticker';
 import {
     readWingEdgeStickerLabel,
-    numberToWingEdgeStickerLabel,
 } from './WingEdgeStickerLabel';
 import {XCenterSticker} from './XCenterSticker';
 import {
     readXCenterStickerLabel,
-    numberToXCenterStickerLabel,
 } from './XCenterStickerLabel';
-import {State444} from './State444';
+import {TCenterSticker} from './TCenterSticker';
+import {
+    readTCenterStickerLabel,
+    numberToTCenterStickerLabel,
+} from './TCenterStickerLabel';
+import {State555} from './State555';
 
-export class Algorithm444 {
-    private moves : Array<Move444> = [];
-    private state : State444;
+export class Algorithm555 {
+    private moves : Array<Move555> = [];
+    private state : State555;
 
     constructor(algorithmStr: string) {
-        const cube = new Cube444();
+        const cube = new Cube555();
 
         algorithmStr.split(' ').filter(s => s !== '').map(notationStr => {
-            const move = new Move444(notationStr);
+            const move = new Move555(notationStr);
             this.moves.push(move);
 
             cube.move(move.getNotation());
@@ -44,11 +52,11 @@ export class Algorithm444 {
     }
 
     public isValidThreeStyleCornerTyped(buffer: CornerSticker, sticker1: CornerSticker, sticker2: CornerSticker): boolean {
-        let algCube : Cube444;
+        let algCube : Cube555;
         let initialState;
 
-        algCube = new Cube444();
-        initialState = State444.getInitialState();
+        algCube = new Cube555();
+        initialState = State555.getInitialState();
 
         this.moves.map(move => {
             algCube.move(move.getNotation());
@@ -76,9 +84,48 @@ export class Algorithm444 {
         co[sticker1.getPieceInd()] = newSticker1CO;
         co[sticker2.getPieceInd()] = newSticker2CO;
 
-        const cycledState = new State444(cp, co, undefined, undefined, undefined);
+        const cycledState = new State555(cp, co, undefined, undefined, undefined, undefined, undefined, undefined);
 
         return algCube.getState().eq(cycledState);
+    };
+
+    public isValidThreeStyleEdge(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new EdgeSticker(readEdgeStickerLabel(bufferStr));
+        const sticker1 = new EdgeSticker(readEdgeStickerLabel(sticker1Str));
+        const sticker2 = new EdgeSticker(readEdgeStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleEdgeTyped(buffer, sticker1, sticker2);
+    }
+
+
+    public isValidThreeStyleEdgeTyped(buffer: EdgeSticker, sticker1: EdgeSticker, sticker2: EdgeSticker): boolean {
+        const initialState = State555.getInitialState();
+
+        const bufferEO = buffer.getOrientation();
+        const sticker1EO = sticker1.getOrientation();
+        const sticker2EO = sticker2.getOrientation();
+
+        // (負の数) % 3 にならないようにしている
+        const newBufferEO = (bufferEO - sticker2EO + 2) % 2;
+        const newSticker1EO = (sticker1EO - bufferEO + 2) % 2;
+        const newSticker2EO = (sticker2EO - sticker1EO + 2) % 2;
+
+        // initialStateからEP, EOしたStateを生成して、this.stateと同一かどうか判定する
+        const ep = initialState.getEp();
+        const eo = initialState.getEo();
+
+        const orig_buffer_ep = ep[buffer.getPieceInd()];
+        ep[buffer.getPieceInd()] = ep[sticker2.getPieceInd()];
+        ep[sticker2.getPieceInd()] = ep[sticker1.getPieceInd()];
+        ep[sticker1.getPieceInd()] = orig_buffer_ep;
+
+        eo[buffer.getPieceInd()] = newBufferEO;
+        eo[sticker1.getPieceInd()] = newSticker1EO;
+        eo[sticker2.getPieceInd()] = newSticker2EO;
+
+        const cycledState = new State555(undefined, undefined, ep, eo, undefined, undefined, undefined,  undefined);
+
+        return this.state.eq(cycledState);
     };
 
     private static swapWingEdgeSystem(wingEdgeStickerStr: string) {
@@ -96,7 +143,7 @@ export class Algorithm444 {
             buffer = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStr));
             isFUrSystem = true;
         } catch (e) {
-            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(bufferStr)));
+            buffer = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm555.swapWingEdgeSystem(bufferStr)));
             isFUrSystem = false;
         }
 
@@ -104,15 +151,15 @@ export class Algorithm444 {
             sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker1Str));
             sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(sticker2Str));
         } else {
-            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker1Str)));
-            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm444.swapWingEdgeSystem(sticker2Str)));
+            sticker1 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm555.swapWingEdgeSystem(sticker1Str)));
+            sticker2 = new WingEdgeSticker(readWingEdgeStickerLabel(Algorithm555.swapWingEdgeSystem(sticker2Str)));
         }
 
         return this.isValidThreeStyleWingEdgeTyped(buffer, sticker1, sticker2);
     }
 
     public isValidThreeStyleWingEdgeTyped(buffer: WingEdgeSticker, sticker1: WingEdgeSticker, sticker2: WingEdgeSticker): boolean {
-        const initialState = State444.getInitialState();
+        const initialState = State555.getInitialState();
 
         // initialStateからWPしたStateを生成して、this.stateと同一かどうか判定する
         const wp = initialState.getWp();
@@ -122,7 +169,7 @@ export class Algorithm444 {
         wp[sticker2.getPieceInd()] = wp[sticker1.getPieceInd()];
         wp[sticker1.getPieceInd()] = orig_buffer_wp;
 
-        const cycledState = new State444(undefined, undefined, undefined, wp, false);
+        const cycledState = new State555(undefined, undefined, undefined, undefined, undefined, undefined, wp, undefined, false);
 
         return this.state.eq(cycledState);
     };
@@ -136,7 +183,7 @@ export class Algorithm444 {
     }
 
     public isValidThreeStyleXCenterTyped(buffer: XCenterSticker, sticker1: XCenterSticker, sticker2: XCenterSticker): boolean {
-        const initialState = State444.getInitialState();
+        const initialState = State555.getInitialState();
 
         // initialStateからXPしたStateを生成して、this.stateと同一かどうか判定する
         const xp = initialState.getXp();
@@ -146,18 +193,41 @@ export class Algorithm444 {
         xp[sticker2.getPieceInd()] = xp[sticker1.getPieceInd()];
         xp[sticker1.getPieceInd()] = orig_buffer_xp;
 
-        const cycledState = new State444(undefined, undefined, xp, undefined, false);
+        const cycledState = new State555(undefined, undefined, undefined, undefined, undefined, xp, undefined, undefined, false);
         return this.state.eq(cycledState);
     };
 
-    public inverse() : Algorithm444 {
+    public isValidThreeStyleTCenter(bufferStr: string, sticker1Str: string, sticker2Str: string): boolean {
+        const buffer = new TCenterSticker(readTCenterStickerLabel(bufferStr));
+        const sticker1 = new TCenterSticker(readTCenterStickerLabel(sticker1Str));
+        const sticker2 = new TCenterSticker(readTCenterStickerLabel(sticker2Str));
+
+        return this.isValidThreeStyleTCenterTyped(buffer, sticker1, sticker2);
+    }
+
+    public isValidThreeStyleTCenterTyped(buffer: TCenterSticker, sticker1: TCenterSticker, sticker2: TCenterSticker): boolean {
+        const initialState = State555.getInitialState();
+
+        // initialStateからTPしたStateを生成して、this.stateと同一かどうか判定する
+        const tp = initialState.getTp();
+
+        const orig_buffer_tp = tp[buffer.getPieceInd()];
+        tp[buffer.getPieceInd()] = tp[sticker2.getPieceInd()];
+        tp[sticker2.getPieceInd()] = tp[sticker1.getPieceInd()];
+        tp[sticker1.getPieceInd()] = orig_buffer_tp;
+
+        const cycledState = new State555(undefined, undefined, undefined, undefined, undefined, undefined, undefined, tp, false);
+        return this.state.eq(cycledState);
+    };
+
+    public inverse() : Algorithm555 {
         // (A B C)' = C' B' A'
         const newNotations : Array<string> = [];
         this.moves.slice().reverse().map(move => {
             newNotations.push(move.makeInverse().getNotation())
         })
 
-        const newAlg = new Algorithm444(newNotations.join(' '));
+        const newAlg = new Algorithm555(newNotations.join(' '));
         this.moves = newAlg.getMoves();
         this.state = newAlg.getState();
 
@@ -165,8 +235,8 @@ export class Algorithm444 {
     }
 
     public detectThreeStyleCornerStickers(bufferStickerStr: string) : Array<string> {
-        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
-        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+        const inversedAlg = new Algorithm555(this.getNotation()).inverse();
+        const cube : Cube555 = new Cube555(inversedAlg.getNotation());
 
         const cp = cube.getState().getCp();
         const co = cube.getState().getCo();
@@ -184,9 +254,29 @@ export class Algorithm444 {
         }
     }
 
+    public detectThreeStyleEdgeStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm555(this.getNotation()).inverse();
+        const cube : Cube555 = new Cube555(inversedAlg.getNotation());
+
+        const ep = cube.getState().getEp();
+        const eo = cube.getState().getEo();
+
+        const ans = Algorithm333.detectThreeStyleEdgeStickersEpEo(bufferStickerStr, ep, eo);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check edge only cycle
+        if (this.isValidThreeStyleEdgeTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
     public detectThreeStyleWingEdgeStickers(bufferStickerStr: string) : Array<string> {
-        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
-        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+        const inversedAlg = new Algorithm555(this.getNotation()).inverse();
+        const cube : Cube555 = new Cube555(inversedAlg.getNotation());
 
         const wp = cube.getState().getWp();
 
@@ -203,43 +293,13 @@ export class Algorithm444 {
         if (isFUrSystem) {
             return ans.map(sticker => sticker.toString());
         } else {
-            return ans.map(sticker => Algorithm444.swapWingEdgeSystem(sticker.toString()));
+            return ans.map(sticker => Algorithm555.swapWingEdgeSystem(sticker.toString()));
         }
-    }
-
-    public static detectThreeStyleWingEdgeStickersWp(bufferStickerStr: string, wp: Array<number>) : [boolean, Array<WingEdgeSticker>] {
-        let bufferSticker : WingEdgeSticker;
-        let isFUrSystem : boolean;
-        try {
-            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(bufferStickerStr));
-            isFUrSystem = true;
-        } catch (e) {
-            const swapped = Algorithm444.swapWingEdgeSystem(bufferStickerStr);
-            bufferSticker = new WingEdgeSticker(readWingEdgeStickerLabel(swapped));
-            isFUrSystem = false;
-        }
-
-        const bufferPieceInd = bufferSticker.getPieceInd();
-
-        const sticker1PieceInd = wp[bufferPieceInd];
-        const sticker2PieceInd = wp[sticker1PieceInd];
-
-        if (wp[sticker2PieceInd] !== bufferPieceInd) {
-            return [ isFUrSystem, [] ];
-        }
-
-        const ans = [
-            bufferSticker,
-            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker1PieceInd)),
-            new WingEdgeSticker(numberToWingEdgeStickerLabel(sticker2PieceInd)),
-        ];
-
-        return [isFUrSystem, ans];
     }
 
     public detectThreeStyleXCenterStickers(bufferStickerStr: string) : Array<string> {
-        const inversedAlg = new Algorithm444(this.getNotation()).inverse();
-        const cube : Cube444 = new Cube444(inversedAlg.getNotation());
+        const inversedAlg = new Algorithm555(this.getNotation()).inverse();
+        const cube : Cube555 = new Cube555(inversedAlg.getNotation());
 
         const xp = cube.getState().getXp();
 
@@ -256,45 +316,64 @@ export class Algorithm444 {
         }
     }
 
-    public static detectThreeStyleXCenterStickersXp(bufferStickerStr: string, xp: Array<number>) : Array<XCenterSticker> {
-        const bufferSticker : XCenterSticker = new XCenterSticker(readXCenterStickerLabel(bufferStickerStr));
+    public detectThreeStyleTCenterStickers(bufferStickerStr: string) : Array<string> {
+        const inversedAlg = new Algorithm555(this.getNotation()).inverse();
+        const cube : Cube555 = new Cube555(inversedAlg.getNotation());
+
+        const tp = cube.getState().getTp();
+
+        const ans = Algorithm555.detectThreeStyleTCenterStickersTp(bufferStickerStr, tp);
+        if (ans.length !== 3) {
+            return [];
+        }
+
+        // check t-center only cycle
+        if (this.isValidThreeStyleTCenterTyped(ans[0], ans[1], ans[2])) {
+            return ans.map(sticker => sticker.toString());
+        } else {
+            return [];
+        }
+    }
+
+    public static detectThreeStyleTCenterStickersTp(bufferStickerStr: string, tp: Array<number>) : Array<TCenterSticker> {
+        const bufferSticker : TCenterSticker = new TCenterSticker(readTCenterStickerLabel(bufferStickerStr));
         const bufferPieceInd = bufferSticker.getPieceInd();
 
-        const sticker1PieceInd = xp[bufferPieceInd];
-        const sticker2PieceInd = xp[sticker1PieceInd];
+        const sticker1PieceInd = tp[bufferPieceInd];
+        const sticker2PieceInd = tp[sticker1PieceInd];
 
-        if (xp[sticker2PieceInd] !== bufferPieceInd) {
+        if (tp[sticker2PieceInd] !== bufferPieceInd) {
             return [];
         }
 
         return [
             bufferSticker,
-            new XCenterSticker(numberToXCenterStickerLabel(sticker1PieceInd)),
-            new XCenterSticker(numberToXCenterStickerLabel(sticker2PieceInd)),
+            new TCenterSticker(numberToTCenterStickerLabel(sticker1PieceInd)),
+            new TCenterSticker(numberToTCenterStickerLabel(sticker2PieceInd)),
        ];
     }
 
     // setup, move1, move2, move1' move2', setup'
-    public static makeThreeStyle(setup: string, move1: string, move2: string): Algorithm444 {
+    public static makeThreeStyle(setup: string, move1: string, move2: string): Algorithm555 {
         const newNotations = [ setup, move1, move2, ];
 
         // move1'
-        newNotations.push(new Algorithm444(move1).inverse().getNotation());
+        newNotations.push(new Algorithm555(move1).inverse().getNotation());
 
         // move2'
-        newNotations.push(new Algorithm444(move2).inverse().getNotation());
+        newNotations.push(new Algorithm555(move2).inverse().getNotation());
 
         // setup'
-        newNotations.push(new Algorithm444(setup).inverse().getNotation());
+        newNotations.push(new Algorithm555(setup).inverse().getNotation());
 
-        return new Algorithm444(newNotations.join(' '));
+        return new Algorithm555(newNotations.join(' '));
     }
 
-    public getState() : State444 {
+    public getState() : State555 {
         return _.cloneDeep(this.state);
     }
 
-    public getMoves() : Array<Move444> {
+    public getMoves() : Array<Move555> {
         return _.cloneDeep(this.moves);
     }
 
@@ -302,7 +381,7 @@ export class Algorithm444 {
         return this.moves.map(m => m.getNotation()).join(' ');
     }
 
-    public eq(alg: Algorithm444): boolean {
+    public eq(alg: Algorithm555): boolean {
         return this.state.eq(alg.getState());
     }
 };

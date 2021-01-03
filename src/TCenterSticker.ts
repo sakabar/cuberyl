@@ -3,16 +3,16 @@ import {Part} from './Part';
 import {PartLabel} from './PartLabel';
 import {StickerInterface} from './StickerInterface';
 import {
-    XCenterStickerLabel,
-    xCenterStickerLabelToString,
-} from './XCenterStickerLabel';
+    TCenterStickerLabel,
+    tCenterStickerLabelToString,
+} from './TCenterStickerLabel';
 
-export class XCenterSticker implements StickerInterface {
-    private part : Part = new Part(PartLabel.X_CENTER, 0);
+export class TCenterSticker implements StickerInterface {
+    private part : Part = new Part(PartLabel.T_CENTER, 0);
     // expediently
     private orientation: number;
 
-    constructor(private stickerLabel: XCenterStickerLabel) {
+    constructor(private stickerLabel: TCenterStickerLabel) {
         this.orientation = 0;
     }
 
@@ -29,6 +29,6 @@ export class XCenterSticker implements StickerInterface {
     }
 
     public toString() : string {
-        return xCenterStickerLabelToString(this.stickerLabel);
+        return tCenterStickerLabelToString(this.stickerLabel);
     }
 }

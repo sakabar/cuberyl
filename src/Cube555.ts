@@ -1,20 +1,20 @@
 const _ = require('lodash');
-import {Notation444} from './Notation444';
-import {Move444} from './Move444';
-import {State444} from './State444';
+import {Notation555} from './Notation555';
+import {Move555} from './Move555';
+import {State555} from './State555';
 
-export class Cube444 {
-    private state : State444;
+export class Cube555 {
+    private state : State555;
 
     constructor(sequence?: string) {
-        this.state = State444.getInitialState();
+        this.state = State555.getInitialState();
         if (sequence) {
             this.move(sequence);
         }
     }
 
     public getOrder(): number {
-        return 4;
+        return 5;
     }
 
     public move(sequence: string): void {
@@ -28,569 +28,800 @@ export class Cube444 {
         }
 
         // ここから下は1回転の場合
-        const oneMove = new Move444(sequence);
+        const oneMove = new Move555(sequence);
 
         const notation = oneMove.getNotation();
         switch (notation) {
-            case Notation444.R:
+            case Notation555.R:
                 this.state = this.state
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.R2:
+            case Notation555.R2:
                 this.state = this.state
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.R_:
+            case Notation555.R_:
                 this.state = this.state
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.U:
-                this.state = this.state.applyMove(State444.getUMoveState());
+            case Notation555.U:
+                this.state = this.state.applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444.U2:
+            case Notation555.U2:
                 this.state = this.state
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444.U_:
+            case Notation555.U_:
                 this.state = this.state
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444.L:
-                this.state = this.state.applyMove(State444.getLMoveState());
+            case Notation555.L:
+                this.state = this.state.applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444.L2:
+            case Notation555.L2:
                 this.state = this.state
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444.L_:
+            case Notation555.L_:
                 this.state = this.state
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444.D:
-                this.state = this.state.applyMove(State444.getDMoveState());
+            case Notation555.D:
+                this.state = this.state.applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444.D2:
+            case Notation555.D2:
                 this.state = this.state
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444.D_:
+            case Notation555.D_:
                 this.state = this.state
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444.F:
-                this.state = this.state.applyMove(State444.getFMoveState());
+            case Notation555.F:
+                this.state = this.state.applyMove(State555.getFMoveState());
                 break;
 
-            case Notation444.F2:
+            case Notation555.F2:
                 this.state = this.state
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState());
                 break;
 
-            case Notation444.F_:
+            case Notation555.F_:
                 this.state = this.state
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState());
                 break;
 
-            case Notation444.B:
-                this.state = this.state.applyMove(State444.getBMoveState());
+            case Notation555.B:
+                this.state = this.state.applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444.B2:
+            case Notation555.B2:
                 this.state = this.state
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444.B_:
+            case Notation555.B_:
                 this.state = this.state
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444.x:
-                this.state = this.state.applyMove(State444.getXMoveState());
+            case Notation555.E:
+                this.state = this.state.applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.x2:
+            case Notation555.E2:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState());
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.x_:
+            case Notation555.E_:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState());
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.y:
-                this.state = this.state.applyMove(State444.getYMoveState());
+            case Notation555.M:
+                this.state = this.state
+                        .applyMove(State555.getMMoveState());
+                break;
+
+            case Notation555.M2:
+                this.state = this.state
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
+                break;
+
+            case Notation555.M_:
+                this.state = this.state
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
+                break;
+
+            case Notation555.S:
+                this.state = this.state.applyMove(State555.getSMoveState());
+                break;
+
+            case Notation555.S2:
+                this.state = this.state
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
+                break;
+
+            case Notation555.S_:
+                this.state = this.state
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
+                break;
+
+            case Notation555.x:
+                this.state = this.state.applyMove(State555.getXMoveState());
+                break;
+
+            case Notation555.x2:
+                this.state = this.state
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState());
+                break;
+
+            case Notation555.x_:
+                this.state = this.state
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState());
+                break;
+
+            case Notation555.y:
+                this.state = this.state.applyMove(State555.getYMoveState());
+                break;
+
+            case Notation555.y2:
+                this.state = this.state
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState());
+                break;
+
+            case Notation555.y_:
+                this.state = this.state
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState());
+                break;
+
+            case Notation555.z:
+                this.state = this.state.applyMove(State555.getZMoveState());
+                break;
+
+            case Notation555.z2:
+                this.state = this.state
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState());
+                break;
+
+            case Notation555.z_:
+                this.state = this.state
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState());
                 break;
 
-            case Notation444.y2:
+            case Notation555.r:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState());
+                        .applyMove(State555.getSliceRMoveState());
                 break;
 
-            case Notation444.y_:
+            case Notation555.r2:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState());
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState());
                 break;
 
-            case Notation444.z:
-                this.state = this.state.applyMove(State444.getZMoveState());
+            case Notation555.r_:
+                this.state = this.state
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState());
+                break;
+
+            case Notation555.u:
+                this.state = this.state
+                        .applyMove(State555.getSliceUMoveState());
+                break;
+
+            case Notation555.u2:
+                this.state = this.state
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState());
+                break;
+
+            case Notation555.u_:
+                this.state = this.state
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState());
+                break;
+
+            case Notation555.l:
+                this.state = this.state
+                        .applyMove(State555.getSliceLMoveState());
+                break;
+
+            case Notation555.l2:
+                this.state = this.state
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState());
+                break;
+
+            case Notation555.l_:
+                this.state = this.state
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState());
+                break;
+
+            case Notation555.d:
+                this.state = this.state
+                        .applyMove(State555.getSliceDMoveState());
+                break;
+
+            case Notation555.d2:
+                this.state = this.state
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState());
+                break;
+
+            case Notation555.d_:
+                this.state = this.state
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState());
+                break;
+
+            case Notation555.f:
+                this.state = this.state
+                        .applyMove(State555.getSliceFMoveState());
+                break;
+
+            case Notation555.f2:
+                this.state = this.state
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState());
+                break;
+
+            case Notation555.f_:
+                this.state = this.state
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState());
+                break;
+
+            case Notation555.b:
+                this.state = this.state
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.z2:
+            case Notation555.b2:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState());
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.z_:
+            case Notation555.b_:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState());
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.r:
+            case Notation555.Rw:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState());
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.r2:
+            case Notation555.Rw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState());
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.r_:
+            case Notation555.Rw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState());
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444.u:
+            case Notation555.Uw:
                 this.state = this.state
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState());
                 break;
 
-            case Notation444.u2:
+            case Notation555.Uw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState());
                 break;
 
-            case Notation444.u_:
+            case Notation555.Uw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState());
                 break;
 
-            case Notation444.l:
+            case Notation555.Dw:
                 this.state = this.state
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState());
                 break;
 
-            case Notation444.l2:
+            case Notation555.Dw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState());
                 break;
 
-            case Notation444.l_:
+            case Notation555.Dw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState());
                 break;
 
-            case Notation444.d:
+            case Notation555.Lw:
                 this.state = this.state
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState());
                 break;
 
-            case Notation444.d2:
+            case Notation555.Lw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState());
                 break;
 
-            case Notation444.d_:
+            case Notation555.Lw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState());
                 break;
 
-            case Notation444.f:
+            case Notation555.Fw:
                 this.state = this.state
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState());
                 break;
 
-            case Notation444.f2:
+            case Notation555.Fw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState());
                 break;
 
-            case Notation444.f_:
+            case Notation555.Fw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState());
                 break;
 
-            case Notation444.b:
+            case Notation555.Bw:
                 this.state = this.state
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.b2:
+            case Notation555.Bw2:
                 this.state = this.state
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.b_:
+            case Notation555.Bw_:
                 this.state = this.state
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState());
                 break;
 
-            case Notation444.Rw:
+            case Notation555['3Rw']:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Rw2:
+            case Notation555['3Rw2']:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Rw_:
+            case Notation555['3Rw_']:
                 this.state = this.state
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getSliceRMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getSliceRMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Uw:
+            case Notation555['3Uw']:
                 this.state = this.state
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Uw2:
+            case Notation555['3Uw2']:
                 this.state = this.state
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Uw_:
+            case Notation555['3Uw_']:
                 this.state = this.state
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState())
-                        .applyMove(State444.getSliceUMoveState());
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getSliceUMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Dw:
+            case Notation555['3Dw']:
                 this.state = this.state
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Dw2:
+            case Notation555['3Dw2']:
                 this.state = this.state
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Dw_:
+            case Notation555['3Dw_']:
                 this.state = this.state
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState())
-                        .applyMove(State444.getSliceDMoveState());
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getSliceDMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState())
+                        .applyMove(State555.getEMoveState());
                 break;
 
-            case Notation444.Lw:
+            case Notation555['3Lw']:
                 this.state = this.state
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Lw2:
+            case Notation555['3Lw2']:
                 this.state = this.state
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Lw_:
+            case Notation555['3Lw_']:
                 this.state = this.state
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState())
-                        .applyMove(State444.getSliceLMoveState());
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getSliceLMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState())
+                        .applyMove(State555.getMMoveState());
                 break;
 
-            case Notation444.Fw:
+            case Notation555['3Fw']:
                 this.state = this.state
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444.Fw2:
+            case Notation555['3Fw2']:
                 this.state = this.state
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444.Fw_:
+            case Notation555['3Fw_']:
                 this.state = this.state
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState())
-                        .applyMove(State444.getSliceFMoveState());
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSliceFMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444.Bw:
+            case Notation555['3Bw']:
                 this.state = this.state
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444.Bw2:
+            case Notation555['3Bw2']:
                 this.state = this.state
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444.Bw_:
+            case Notation555['3Bw_']:
                 this.state = this.state
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState())
-                        .applyMove(State444.getSliceBMoveState());
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSliceBMoveState())
+                        .applyMove(State555.getSMoveState());
                 break;
 
-            case Notation444['3Rw']:
+            case Notation555['4Rw']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getLMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444['3Rw2']:
+            case Notation555['4Rw2']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444['3Rw_']:
+            case Notation555['4Rw_']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState())
-                        .applyMove(State444.getLMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState())
+                        .applyMove(State555.getLMoveState());
                 break;
 
-            case Notation444['3Uw']:
+            case Notation555['4Uw']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getDMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444['3Uw2']:
+            case Notation555['4Uw2']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444['3Uw_']:
+            case Notation555['4Uw_']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState())
-                        .applyMove(State444.getDMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState())
+                        .applyMove(State555.getDMoveState());
                 break;
 
-            case Notation444['3Dw']:
+            case Notation555['4Dw']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getUMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444['3Dw2']:
+            case Notation555['4Dw2']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444['3Dw_']:
+            case Notation555['4Dw_']:
                 this.state = this.state
-                        .applyMove(State444.getYMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState())
-                        .applyMove(State444.getUMoveState());
+                        .applyMove(State555.getYMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState())
+                        .applyMove(State555.getUMoveState());
                 break;
 
-            case Notation444['3Lw']:
+            case Notation555['4Lw']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444['3Lw2']:
+            case Notation555['4Lw2']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444['3Lw_']:
+            case Notation555['4Lw_']:
                 this.state = this.state
-                        .applyMove(State444.getXMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState())
-                        .applyMove(State444.getRMoveState());
+                        .applyMove(State555.getXMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState())
+                        .applyMove(State555.getRMoveState());
                 break;
 
-            case Notation444['3Fw']:
+            case Notation555['4Fw']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getBMoveState());
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444['3Fw2']:
+            case Notation555['4Fw2']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState());
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444['3Fw_']:
+            case Notation555['4Fw_']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState())
-                        .applyMove(State444.getBMoveState());
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState())
+                        .applyMove(State555.getBMoveState());
                 break;
 
-            case Notation444['3Bw']:
+            case Notation555['4Bw']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getFMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getFMoveState())
                 break;
 
-            case Notation444['3Bw2']:
+            case Notation555['4Bw2']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState());
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState());
                 break;
 
-            case Notation444['3Bw_']:
+            case Notation555['4Bw_']:
                 this.state = this.state
-                        .applyMove(State444.getZMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState())
-                        .applyMove(State444.getFMoveState());
+                        .applyMove(State555.getZMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState())
+                        .applyMove(State555.getFMoveState());
                 break;
 
             default:
                 // @ts-ignore TS6133: '_exhaustiveCheck' is declared but its value is never read.
                 const _exhaustiveCheck: never = notation;
-
         }
 
     }
 
-    public eq(c: Cube444): boolean {
+    public eq(c: Cube555): boolean {
         return this.state.eq(c.state);
     }
 
@@ -598,7 +829,7 @@ export class Cube444 {
         return this.state.isSolved();
     }
 
-    public getState(): State444 {
+    public getState(): State555 {
         return _.cloneDeep(this.state);
     }
 }
